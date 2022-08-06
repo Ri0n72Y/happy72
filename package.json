@@ -69,6 +69,7 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
     "@electron-forge/maker-zip": "^6.0.0-beta.65",
     "@electron-forge/plugin-webpack": "6.0.0-beta.65",
+    "@types/pixi.js": "^5.0.0",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -86,6 +87,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
+    "pixi.js": "^6.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
