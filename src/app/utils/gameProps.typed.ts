@@ -2,7 +2,10 @@ export interface ISlimeProps { // 史莱姆的属性
     name?: string, // ? 表示可以没有这一项
     health: number, // 0-1
     pos: { x: number, y: number }, // 详细的像素坐标位置
-    tags: SLIME_TAG[], // 现有buff栏
+    tags: {
+        key: SLIME_TAG,
+        value: number, // buff持续了几天
+    }[], // 现有buff栏
 }
 export interface IBuildingProps { // 建筑的属性
     name?: string,

@@ -9,7 +9,7 @@ export function MapLoader(name: SENARIOS): IStoreProps {
     const save = getMapObject(name);
     return {
         map: { ...save },
-        state: { ...save },
+        entityState: { ...save },
     };
 }
 

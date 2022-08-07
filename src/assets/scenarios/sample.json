@@ -46,7 +46,10 @@
             },
             "health": 80,
             "tags": [
-                "infacted"
+                {
+                    "key": "infacted",
+                    "value": 1
+                }
             ]
         }
     ],
