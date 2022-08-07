@@ -1,0 +1,55 @@
+{
+    "TestingCharge": 5,
+    "TenstingTime": 10,
+    "TestingCorrectness": 1.0,
+    "DayTime": 50,
+    "NightTime": 10,
+    "NaturalClean": 3,
+    "NaturalProduction": 5,
+    "NaturalCost": -0.02,
+    "NaturalHeal": 0.1,
+    "Frequency": 5,
+    "ResidentialHeal": 0.25,
+    "MoveSpeed": 96,
+    "DailyCost": {
+        "residential": 100,
+        "testStation": 50,
+        "hospital": 200,
+        "squareCabin": 50,
+        "factory": 40
+    },
+    "BuildCost": {
+        "residential": 500,
+        "testStation": 250,
+        "hospital": 1000,
+        "squareCabin": 250,
+        "factory": 200
+    },
+    "SlotProduce": {
+        "residential": 0,
+        "testStation": 0,
+        "hospital": -60,
+        "squareCabin": -30,
+        "factory": 30
+    },
+    "SlotHeal": {
+        "residential": -0.06,
+        "testStation": 0,
+        "hospital": 0.1,
+        "squareCabin": 0.05,
+        "factory": -0.06
+    },
+    "Slime": {
+        "initialHealth": 0.8,
+        "closeContactInfect": 0.3,
+        "secondContactInfect": 0.04,
+        "incubationMin": 2,
+        "incubationMax": 4,
+        "sickRate": 0.5,
+        "sickHealDays": 5,
+        "diseaseRate": 0.05,
+        "diseasethreshold": 0.35,
+        "immuneResist": -0.8,
+        "immuneSick": -1
+    }
+}
