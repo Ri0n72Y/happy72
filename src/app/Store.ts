@@ -48,7 +48,7 @@ export const initialStore: () => IStoreProps = () => ({
 })
 
 // eslint-disable-next-line prefer-const
-export let Store: IStoreProps = initialStore();
+export const Store: IStoreProps = initialStore();
 
 export interface Action {
     type: string;
