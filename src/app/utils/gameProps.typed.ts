@@ -2,19 +2,34 @@ export interface TagData {
     key: SLIME_TAG,
     value: number, // buff持续了几天
 }
+export interface SlimeMove {
+    speed: number,
+    direction: Vec2,
+}
+export interface SlimeIntent {
+    key: "GOTO" | "IDLE" | "WORK"
+    time: number, // 已持续时间
+    speedScale: number, // 移速倍率
+    goal?: Vec2, // 目标的格子
+    target?: Vec2, // 当前的目的地，坐标
+}
 export interface ISlimeProps { // 史莱姆的属性
     name?: string, // ? 表示可以没有这一项
     health: number, // 0-1
     infected?: boolean, // 实际是否已被感染
+    isTested?: boolean, // 今天是否已经检测过核酸
     inSlot?: boolean, // 是否结算岗位产出
+    intent?: SlimeIntent, // 意图
+    action?: SlimeMove, // 正在进行的动作
     pos: Vec2, // 详细的像素坐标位置
     tags: TagData[], // 现有buff栏
 }
 export interface IBuildingProps { // 建筑的属性
     name?: string,
+    type: "SLEEP" | "MONEY" | "HEAL" | "CABIN" | "TESTING",
     pos: Vec2 // 四个地图格子的左上格在网格上的坐标
     tags: BUILDING_TAG[], // 建筑现有的buff栏
-    slots?: ISlimeProps | null[], // 现在提供的四个岗位的工作状态，0: 左上，1: 右上，2: 左下, 3:右下
+    slots?: (ISlimeProps | null)[], // 现在提供的四个岗位的工作状态，0: 左上，1: 右上，2: 左下, 3:右下
 }
 
 type TileType = 0 // 普通的草地
