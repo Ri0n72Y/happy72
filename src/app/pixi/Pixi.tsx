@@ -3,7 +3,6 @@ import * as PIXI from "pixi.js";
 import * as U from "../utils";
 import * as UI from "./UI";
 import * as SG from "./SlimeGene";
-import { app } from "electron";
 
 const PIXIConfig = {
     width: U.CANVAS_WIDTH,
