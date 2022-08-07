@@ -14,18 +14,18 @@ const PIXIConfig = {
 
 function Pixi() {
     const app = new PIXI.Application(PIXIConfig);
-    const container = new PIXI.Container();
-    app.stage.addChild(container);
+    // const container = new PIXI.Container();
+    // app.stage.addChild(container);
 
     const texture = PIXI.Texture.from(Slime[0]);
-    container.addChild(new PIXI.Sprite(texture));
-    container.x = app.screen.width * 0.5;
-    container.y = app.screen.height * 0.5;
+    // container.addChild(new PIXI.Sprite(texture));
+    // container.x = app.screen.width * 0.5;
+    // container.y = app.screen.height * 0.5;
     UI.DrawCells(app);
 
-    app.ticker.add((delta) => {
-        container.rotation -= 0.01 * delta;
-    });
+    // app.ticker.add((delta) => {
+    //     container.rotation -= 0.01 * delta;
+    // });
 
     // Scale mode for pixelation
     texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
@@ -48,6 +48,7 @@ function Pixi() {
             const slimee = new PIXI.AnimatedSprite(Textures);
             slimee.interactive = true;
             slimee.buttonMode = true;
+            slimee.anchor.set(0.5);
             slimee.x = Math.random() * app.screen.width;
             slimee.y = Math.random() * app.screen.height;
             slimee.scale.set(1, 1);
