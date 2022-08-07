@@ -26,4 +26,12 @@ module.exports = [
       },
     },
   },
+  {
+    test: /\.(png|jpg|jpeg|gif)$/i,
+    type: "asset/resource",
+  },
+  {
+    test: /\.less$/,
+    use: ['style-loader', 'css-loader', 'typed-css-modules-loader', 'less-loader'],
+  },
 ];

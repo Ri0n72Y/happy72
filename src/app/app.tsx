@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useMemo } from "react";
+import './app.less';
+import Pixi from "./pixi/Pixi";
 
 function App() {
+  const canvas = useMemo(() => <Pixi />, []);
   return (<div>
-    Hello Electron React Typescript
+    {canvas}
   </div>)
 }
 
 export default App;
-// I have made some changes!
