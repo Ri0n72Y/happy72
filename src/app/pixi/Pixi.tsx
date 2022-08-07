@@ -3,7 +3,6 @@ import * as PIXI from "pixi.js";
 import * as U from "../utils";
 import * as UI from "./UI";
 import { Slime } from "../../assets/ShremAnim/AnimatedImage";
-import { app } from "electron";
 
 const PIXIConfig = {
     width: U.CANVAS_WIDTH,
