@@ -11,6 +11,21 @@ export interface IBuildingProps { // 建筑的属性
     slots: ISlimeProps | null[], // 现在提供的四个岗位的工作状态，0: 左上，1: 右上，2: 左下, 3:右下
 }
 
+type TileType = 0 // 普通的草地
+    | 1 // 建筑
+    | -1 // 障碍物类型1 
+    | -2 // 障碍物类型2（贴图不同）
+    | -3; // 障碍物类型3
+export interface IMapProps {
+    map: TileType[][], // 现在地图的地图块
+    infection: number[][], // 地图块的感染模式，0代表未被感染，数字代表当前区域还有几天自然解除感染的倒计时
+}
+export interface IEntityState {
+    slimes: ISlimeProps[], // 地图上史莱姆的状态
+    buildings: IBuildingProps[], // 地图上的所有建筑的状态
+}
+export interface IMapSaveData extends IMapProps, IEntityState { }
+
 const slimeTags = [
     'infected',
     'disease',
