@@ -1,6 +1,6 @@
 import type { IBuildingProps, IEntityState, IMapProps, IMapSaveData } from "../utils/gameProps.typed";
 import sample from '../../assets/scenarios/sample.json';
-import { IStoreProps } from "../Store";
+import { DefaultConfigProps, DefaultGameStateProps, IStoreProps } from "../Store";
 
 enum SENARIOS {
     SAMPLE, ESAY, NORMAL, HARD, EXTREME,
@@ -12,6 +12,8 @@ export function MapLoader(name: SENARIOS): IStoreProps {
     return {
         map: { ...map, buildings: buildings },
         entityState: entityState,
+        gameState: DefaultGameStateProps,
+        config: DefaultConfigProps,
     };
 }
 
