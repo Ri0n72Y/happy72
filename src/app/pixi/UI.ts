@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
 import * as U from "../utils";
-import { Vec2 } from "../utils/gameProps.typed";
 
 const COLOR = 0xFFFFFF;
 export function DrawCells(app: PIXI.Application) {
@@ -18,16 +17,4 @@ export function DrawCells(app: PIXI.Application) {
     app.stage.addChild(graphics);
 }
 
-export function PosCell2Pixel(cell: Vec2): Vec2 {
-    return {
-        x: cell.x * U.CELL_SIZE,
-        y: cell.y * U.CELL_SIZE,
-    }
-}
 
-export function PosPixel2Cell(pos: Vec2): Vec2 {
-    return {
-        x: Math.floor(pos.x / U.CELL_SIZE),
-        y: Math.floor(pos.y / U.CELL_SIZE),
-    }
-}
