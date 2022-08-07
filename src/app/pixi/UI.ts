@@ -5,6 +5,7 @@ import { Vec2 } from "../utils/gameProps.typed";
 const COLOR = 0xFFFFFF;
 export function DrawCells(app: PIXI.Application) {
     const graphics = new PIXI.Graphics();
+    graphics.zIndex = 5;
     graphics.lineStyle(1, COLOR, 0.8);
     for (let i = 0; i < U.CELL_ROWS; i++) {
         graphics.moveTo(0, i * U.CELL_SIZE);
