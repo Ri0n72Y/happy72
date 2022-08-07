@@ -2,10 +2,6 @@ export interface TagData {
     key: SLIME_TAG,
     value: number, // buff持续了几天
 }
-export interface SlimeMove {
-    speed: number,
-    direction: Vec2,
-}
 export interface SlimeIntent {
     key: "GOTO" | "IDLE" | "WORK"
     time: number, // 已持续时间
@@ -20,7 +16,6 @@ export interface ISlimeProps { // 史莱姆的属性
     isTested?: boolean, // 今天是否已经检测过核酸
     inSlot?: boolean, // 是否结算岗位产出
     intent?: SlimeIntent, // 意图
-    action?: SlimeMove, // 正在进行的动作
     pos: Vec2, // 详细的像素坐标位置
     tags: TagData[], // 现有buff栏
 }
