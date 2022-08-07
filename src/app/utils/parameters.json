@@ -52,6 +52,7 @@
         "immuneResist": -0.8,
         "immuneSick": -1,
         "searchRadius": 10,
-        "mindChangeRate": 0.05
+        "mindChangeRate": 0.05,
+        "idleRate": 0.1
     }
 }
