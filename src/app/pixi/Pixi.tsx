@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
 import * as U from "../utils";
+import * as UI from "./UI";
 import { Slime } from "../../assets/ShremAnim/AnimatedImage";
 
 const PIXIConfig = {
-    width: U.WINDOW_WIDTH,
-    height: U.WINDOW_HEIGHT,
+    width: U.CANVAS_WIDTH,
+    height: U.CANVAS_HEIGHT,
     backgroundColor: 0x66ccff,
     resolution: window.devicePixelRatio,
 } as const;
@@ -22,6 +23,7 @@ function Pixi() {
 
     app.ticker.add((delta) => {
         container.rotation -= 0.01 * delta;
+        UI.DrawCells(app);
     });
 
     const ReactContainer = useRef(null);
