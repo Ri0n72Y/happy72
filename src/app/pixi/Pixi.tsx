@@ -20,10 +20,10 @@ function Pixi() {
     container.addChild(new PIXI.Sprite(texture));
     container.x = app.screen.width * 0.5;
     container.y = app.screen.height * 0.5;
+    UI.DrawCells(app);
 
     app.ticker.add((delta) => {
         container.rotation -= 0.01 * delta;
-        UI.DrawCells(app);
     });
 
     const ReactContainer = useRef(null);

@@ -16,6 +16,7 @@ export function DrawCells(app: PIXI.Application) {
     }
     app.stage.addChild(graphics);
 }
+
 export function PosCell2Pixel(cell: Vec2): Vec2 {
     return {
         x: cell.x * U.CELL_SIZE,
