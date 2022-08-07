@@ -9,7 +9,7 @@ export interface SlimeMove {
 export interface SlimeIntent {
     key: "GOTO" | "IDLE" | "WORK"
     time: number, // 已持续时间
-    speedScale: number, // 移速倍率
+    speed: number, // 移速
     goal?: Vec2, // 目标的格子
     target?: Vec2, // 当前的目的地，坐标
 }
