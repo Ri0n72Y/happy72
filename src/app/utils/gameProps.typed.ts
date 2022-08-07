@@ -19,12 +19,22 @@ export interface ISlimeProps { // 史莱姆的属性
     pos: Vec2, // 详细的像素坐标位置
     tags: TagData[], // 现有buff栏
 }
+export type BuildingType = "SLEEP" | "MONEY" | "HEAL" | "CABIN" | "TESTING";
+export interface ISlotProps {
+    slime: ISlimeProps,
+    countDown: number,
+}
 export interface IBuildingProps { // 建筑的属性
     name?: string,
-    type: "SLEEP" | "MONEY" | "HEAL" | "CABIN" | "TESTING",
+    type: BuildingType,
     pos: Vec2 // 四个地图格子的左上格在网格上的坐标
     tags: BUILDING_TAG[], // 建筑现有的buff栏
-    slots?: (ISlimeProps | null)[], // 现在提供的四个岗位的工作状态，0: 左上，1: 右上，2: 左下, 3:右下
+    slots?: (ISlotProps | null)[], // 现在提供的四个岗位的工作状态，0: 左上，1: 右上，2: 左下, 3:右下
+    origin?: ISlimeProps,
+}
+export interface ISunlightProps {
+    pos: Vec2, // 掉落的位置
+    value: number, // 包含阳光的数量
 }
 
 type TileType = 0 // 普通的草地
@@ -39,6 +49,7 @@ export interface IMapProps {
 export interface IEntityState {
     slimes: ISlimeProps[], // 地图上史莱姆的状态
     buildings: IBuildingProps[], // 地图上的所有建筑的状态
+    sunlights: ISunlightProps[],
 }
 export interface IMapSaveData {
     map: TileType[][], // 现在地图的地图块

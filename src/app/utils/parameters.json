@@ -11,6 +11,7 @@
     "Frequency": 5,
     "ResidentialHeal": 0.25,
     "MoveSpeed": 96,
+    "InitialSunlight": 100,
     "DailyCost": {
         "residential": 100,
         "testStation": 50,

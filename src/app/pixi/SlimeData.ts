@@ -1,11 +1,11 @@
 import { IStoreProps } from "../Store";
 import * as U from "../utils";
-import { IBuildingProps, ISlimeProps, SlimeIntent, Vec2 } from "../utils/gameProps.typed";
+import { IBuildingProps, ISlimeProps, ISunlightProps, SlimeIntent, Vec2 } from "../utils/gameProps.typed";
 import PARAM from "../utils/parameters";
 import { hasEmptySlot } from "./BuildingData";
 import { GetNameDrawer } from "./DrawRandomName";
 import { checkCollision } from "./Map";
-import { ISunlightProps } from "./Sunlight";
+import { CreateSunlightDrop } from "./Sunlight";
 
 export function CreateSlimeData(pos: Vec2): ISlimeProps {
     const drawer = GetNameDrawer();
@@ -26,10 +26,7 @@ export function CreateSlimeData(pos: Vec2): ISlimeProps {
 export function NatrualGrow(slime: ISlimeProps): ISunlightProps {
     const produce = Math.ceil(PARAM.NaturalProduction * slime.health);
     slime.health += PARAM.NaturalCost;
-    return ({
-        pos: slime.pos,
-        value: produce,
-    })
+    return (CreateSunlightDrop(slime.pos, produce));
 }
 
 const slimeActions = ["heal", "test", "work", "idle"] as const;
