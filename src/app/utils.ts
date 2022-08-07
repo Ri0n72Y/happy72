@@ -22,3 +22,11 @@ export function PosPixel2Cell(pos: Vec2): Vec2 {
         y: Math.floor(pos.y / CELL_SIZE),
     }
 }
+
+export function magnitude(v: Vec2): number {
+    return Math.sqrt(v.x ** 2 + v.y ** 2)
+}
+export function normalize(v: Vec2): Vec2 {
+    const mag = magnitude(v);
+    return { x: v.x / mag, y: v.y / mag }
+}
