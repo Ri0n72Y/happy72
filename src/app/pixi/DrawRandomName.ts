@@ -4,7 +4,7 @@ export interface NameDrawer {
 }
 
 let instance = undefined;
-export function GetNameGenerator(): NameDrawer {
+export function GetNameDrawer(): NameDrawer {
     if (!instance) {
         instance = {
             __names: shuffle([...NAMES_LIBRARY]),
