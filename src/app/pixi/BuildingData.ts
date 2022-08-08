@@ -19,6 +19,10 @@ export function hasEmptySlot(building: IBuildingProps) {
     return building.slots?.filter(s => s === null).length > 0 ?? false;
 }
 
+export function disinfection(building: IBuildingProps) {
+    building.tags.push("disinfected");
+}
+
 /**
  * 当一个史莱姆与建筑重合时使用该方法检测
  * drop史莱姆到建筑时可以直接调用这个方法
@@ -99,6 +103,10 @@ export function updateSlots(buildings: IBuildingProps[], day: 'day'|'night' = 'd
     for (const b of buildings) {
         b.slots.forEach((prop, i) => {
             if (prop === null) { // 没有上岗或者factory里搬砖
+                return;
+            }
+            if (prop.slime.dying) {
+                takeAwaySlime(prop.slime, b, i);
                 return;
             }
             // 传染
