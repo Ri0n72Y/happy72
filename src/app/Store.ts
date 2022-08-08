@@ -14,6 +14,7 @@ export const DefaultConfigProps: IConfigProps = {
 export interface IGameStateProps {
     isPaused: boolean;
     sunlight: number;
+    daynight: 'day' | 'night',
     nextDay: {
         slimeInfected: ISlimeProps[];
         cellInfected: Vec2[];
@@ -22,6 +23,7 @@ export interface IGameStateProps {
 export const DefaultGameStateProps: IGameStateProps = {
     isPaused: false,
     sunlight: PARAM.InitialSunlight,
+    daynight: 'day',
     nextDay: {
         slimeInfected: [],
         cellInfected: [],
