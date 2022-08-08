@@ -16,6 +16,8 @@ const PIXIConfig = {
 
 function Pixi() {
     const app = new PIXI.Application(PIXIConfig);
+    UI.setBackground(app);
+    UI.DrawCells(app);
     app.stage.sortableChildren = true;
     const sources = [
         { name: 'slimeB', url: '../../assets/Shrem_Blue/spritesheet.json' },
@@ -52,9 +54,12 @@ function Pixi() {
     ];
     init(app, functions, sources);
 
+    // const A:interface {
+    
 
+    // }
 
-    UI.DrawCells(app);
+    
     // AG.AnimSlimee(app, 'Blue');
 
     // app.loader.reset();
