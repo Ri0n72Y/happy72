@@ -21,6 +21,7 @@ export function MapLoader(name: SENARIOS): IStoreProps {
 function convertSave2Entity(save: IMapSaveData, buildings: (IBuildingProps | null)[][]): [(IBuildingProps | null)[][], IEntityState] {
     for (const building of save.buildings) {
         if (buildings[building.pos.x][building.pos.y] !== null) continue;
+        building.slots = [null, null, null, null];
         buildings[building.pos.x][building.pos.y] = building;
         buildings[building.pos.x + 1][building.pos.y + 1] = building;
         buildings[building.pos.x + 1][building.pos.y - 1] = building;
