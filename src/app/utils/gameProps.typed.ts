@@ -52,6 +52,7 @@ export interface IEntityState {
     sunlights: ISunlightProps[],
 }
 export interface IMapSaveData {
+    sunlight?: number,
     map: TileType[][], // 现在地图的地图块
     infection: number[][], // 地图块的感染模式，0代表未被感染，数字代表当前区域还有几天自然解除感染的倒计时
     slimes: ISlimeProps[], // 地图上史莱姆的状态
