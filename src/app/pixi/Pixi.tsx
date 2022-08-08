@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
-import { sound } from '@pixi/sound';
 import * as U from "../utils";
 import * as UI from "./UI";
 import { app } from "electron";
-import { init, AnimSlimee, AnimBuilding, AnimSunshine } from "./AnimGenerator";
+import { init, AnimSlimee, SingleSlimee, AnimBuilding, AnimSunshine, playSound } from "./AnimGenerator";
 import * as AG from "./AnimGenerator";
 import { Vec2 } from "../utils/gameProps.typed"
 
@@ -17,6 +16,8 @@ const PIXIConfig = {
 
 function Pixi() {
     const app = new PIXI.Application(PIXIConfig);
+    UI.setBackground(app);
+    UI.DrawCells(app);
     app.stage.sortableChildren = true;
     const sources = [
         { name: 'slimeB', url: '../../assets/Shrem_Blue/spritesheet.json' },
@@ -35,24 +36,32 @@ function Pixi() {
         { name: 'buildingSi', url: '../../assets/Infected/SLEEP/spritesheet.json' },
         { name: 'buildingTi', url: '../../assets/Infected/TESTING/spritesheet.json' },
 
-        { name: 'sunshine', url: '../../assets/Props/Sunshine/spritesheet.json' }];
+        { name: 'sunshine', url: '../../assets/Props/Sunshine/spritesheet.json' },
+
+        { name: 'mysound', url: '../../assets/sounds/Music/ending.wav' }
+
+    ];
     const functions = [
         () => AnimSlimee(app, "Blue"),
         () => AnimSlimee(app, "Green"),
         () => AnimSlimee(app, "Red"),
 
         () => AnimBuilding(app, "CABIN"),
-        () => AnimSunshine(app)
+        () => AnimSunshine(app),
+        () => SingleSlimee(app, "Blue"),
+        // () => playSound()
         // () => AnimBuilding(app, type, pos),
     ];
     init(app, functions, sources);
 
+    // const A:interface {
+    
 
+    // }
 
-    UI.DrawCells(app);
+    
     // AG.AnimSlimee(app, 'Blue');
-    // const sounds = sound.add('mysound', '../../assets/sounds/Music/health.mp3');
-    // sounds.play('mysound');
+
     // app.loader.reset();
     // AG.AnimBuilding();
     // AG.AnimSunshine(app);
