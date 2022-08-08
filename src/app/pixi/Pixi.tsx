@@ -18,13 +18,32 @@ const PIXIConfig = {
 function Pixi() {
     const app = new PIXI.Application(PIXIConfig);
     const sources = [
-        { name: 'slime', url: '../../assets/Shrem_Blue/spritesheet.json' },
+        { name: 'slimeB', url: '../../assets/Shrem_Blue/spritesheet.json' },
+        { name: 'slimeG', url: '../../assets/Shrem_Green/spritesheet.json' },
+        { name: 'slimeR', url: '../../assets/Shrem_Red/spritesheet.json' },
+
+        { name: 'buildingC', url: '../../assets/FuncBds/CABIN/spritesheet.json' },
+        { name: 'buildingH', url: '../../assets/FuncBds/HEAL/spritesheet.json' },
+        { name: 'buildingM', url: '../../assets/FuncBds/MONEY/spritesheet.json' },
+        { name: 'buildingS', url: '../../assets/FuncBds/SLEEP/spritesheet.json' },
+        { name: 'buildingT', url: '../../assets/FuncBds/TESTING/spritesheet.json' },
+
+        { name: 'buildingCi', url: '../../assets/Infected/CABIN/spritesheet.json' },
+        { name: 'buildingHi', url: '../../assets/Infected/HEAL/spritesheet.json' },
+        { name: 'buildingMi', url: '../../assets/Infected/MONEY/spritesheet.json' },
+        { name: 'buildingSi', url: '../../assets/Infected/SLEEP/spritesheet.json' },
+        { name: 'buildingTi', url: '../../assets/Infected/TESTING/spritesheet.json' },
+
         { name: 'sunshine', url: '../../assets/Props/Sunshine/spritesheet.json' }];
     const functions = [
         () => AnimSlimee(app, "Blue"),
-        // () => AnimBuilding(app, "CABIN", pos),
+        () => AnimSlimee(app, "Green"),
+        () => AnimSlimee(app, "Red"),
+
+        () => AnimBuilding(app, "CABIN"),
+        () => AnimSunshine(app)
         // () => AnimBuilding(app, type, pos),
-        () => AnimSunshine(app)];
+    ];
     init(app, functions, sources);
 
 

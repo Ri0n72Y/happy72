@@ -12,8 +12,8 @@ export function init(app: PIXI.Application, funcs: (() => void)[], sources: { na
 }
 
 export function AnimSlimee(app: PIXI.Application, color: string) {
-    app.loader
-        .add('spritesheet1', '../../assets/Shrem_' + color + '/spritesheet.json')
+    // app.loader
+    //     .add('spritesheet1', '../../assets/Shrem_' + color + '/spritesheet.json')
 
     const Textures = [];
     let i;
@@ -70,38 +70,40 @@ export function AnimSlimee(app: PIXI.Application, color: string) {
 }
 
 export function AnimBuilding(
-    app: PIXI.Application, type: BuildingType, pos: Vec2) {
-    app.loader
-        .add('spritesheet2', '../../assets/FuncBds/' + type + '/spritesheet.json')
-        .load(onAssetsLoaded)
-    function onAssetsLoaded() {
-        const Textures = [];
-        let i;
-        for (i = 0; i <= 8; i++) {
-            const covtexture = PIXI.Texture.from(type + `_cover_${i}.png`);
-            Textures.push(covtexture);
-        }
-
-        const cover = new PIXI.AnimatedSprite(Textures);
-        cover.anchor.set(0.5);
-        cover.buttonMode = true;
-        cover.interactive = true;
-        cover.x = 0;
-        cover.y = 0;
-        cover.zIndex = 3; // 渲染图层
-        cover.gotoAndPlay(Math.random() * 27);
-        cover.animationSpeed = 0.1;
-
-        const groundtexture = PIXI.Texture.from(type + `_ground.png`);
-        const ground = new PIXI.Sprite(groundtexture);
-        ground.anchor.set(0.5);
-        ground.x = pos.x;
-        ground.y = pos.y;
-        ground.zIndex = 0; // 渲染图层
-
-        ground.addChild(cover);
-        app.stage.addChild(ground);
+    // app: PIXI.Application, type: BuildingType, pos: Vec2) {
+    app: PIXI.Application, type: BuildingType) {
+    // app.loader
+    //     .add('spritesheet2', '../../assets/FuncBds/' + type + '/spritesheet.json')
+    //     .load(onAssetsLoaded)
+    // function onAssetsLoaded() {
+    const Textures = [];
+    let i;
+    for (i = 0; i <= 8; i++) {
+        const covtexture = PIXI.Texture.from(type + `_cover_${i}.png`);
+        Textures.push(covtexture);
     }
+
+    const cover = new PIXI.AnimatedSprite(Textures);
+    cover.anchor.set(0.5);
+    cover.buttonMode = true;
+    cover.interactive = true;
+    cover.x = 0;
+    cover.y = 0;
+    cover.zIndex = 3; // 渲染图层
+    cover.gotoAndPlay(Math.random() * 27);
+    cover.animationSpeed = 0.1;
+
+    const groundtexture = PIXI.Texture.from(type + `_ground.png`);
+    const ground = new PIXI.Sprite(groundtexture);
+    ground.anchor.set(0.5);
+    // ground.x = pos.x;
+    // ground.y = pos.y;
+    ground.x = 0.3 * app.screen.width; // 测试用
+    ground.y = 0.3 * app.screen.height; // 测试用
+    ground.zIndex = 0; // 渲染图层
+
+    ground.addChild(cover);
+    app.stage.addChild(ground);
 }
 
 // export function AnimSunshine(app: PIXI.Application, pos: Vec2) {
@@ -122,10 +124,10 @@ export function AnimSunshine(app: PIXI.Application) {
     // sunshine.y = pos.y;
     sunshine.x = 0.5 * app.screen.width; // 测试用
     sunshine.y = 0.5 * app.screen.height; // 测试用
-    sunshine.zIndex = 2; // 渲染图层
+    sunshine.zIndex = 6; // 渲染图层
     sunshine.gotoAndPlay(Math.random() * 27);
     sunshine.animationSpeed = 0.1;
-    sunshine.scale.set(0.5, 0.5);
+    sunshine.scale.set(0.8, 0.8);
     app.stage.addChild(sunshine);
     // }
 }
