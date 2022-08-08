@@ -112,7 +112,7 @@ export function GetSlimeIntent(slime: ISlimeProps, store: IStoreProps): SlimeInt
         i++;
     }
     let speed = 0, direction;
-    switch (slimeActions[i]) {
+    switch (slimeActions[i - 1]) {
         case 'idle':
             speed = Math.random() * 0.5 + 0.1 * PARAM.MoveSpeed;
             return ({
@@ -167,9 +167,10 @@ export function GetSlimeIntent(slime: ISlimeProps, store: IStoreProps): SlimeInt
  * @returns a new position, return pos if no move available;
  */
 export function getNextPosition(pos: Vec2, direction: Vec2, speed: number, ways: boolean[][]) {
+    console.log(pos, direction, speed)
     const forward = {
-        x: direction.x * speed * U.CELL_SIZE,
-        y: direction.y * speed * U.CELL_SIZE,
+        x: direction.x * speed,
+        y: direction.y * speed,
     }
     const next = U.vecAdd(pos, forward);
     if (!checkCollision(next, ways))

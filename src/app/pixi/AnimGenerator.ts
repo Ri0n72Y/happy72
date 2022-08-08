@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { ISlimeProps, Vec2, BuildingType } from "../utils/gameProps.typed"
+import { BuildingType } from "../utils/gameProps.typed"
 import { sound } from '@pixi/sound';
 
 export function init(app: PIXI.Application, funcs: (() => void)[], sources: { name: string; url: string; }[]) {
