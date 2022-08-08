@@ -5,7 +5,7 @@ import * as UI from "./UI";
 import { app } from "electron";
 import { init, AnimSlimee, SingleSlimee, AnimBuilding, AnimSunshine, playSound } from "./AnimGenerator";
 import * as AG from "./AnimGenerator";
-import { Vec2 } from "../utils/gameProps.typed"
+import { ISlimeProps, Vec2 } from "../utils/gameProps.typed"
 
 const PIXIConfig = {
     width: U.CANVAS_WIDTH,
@@ -53,18 +53,6 @@ function Pixi() {
         // () => AnimBuilding(app, type, pos),
     ];
     init(app, functions, sources);
-
-    // const A:interface {
-    
-
-    // }
-
-    
-    // AG.AnimSlimee(app, 'Blue');
-
-    // app.loader.reset();
-    // AG.AnimBuilding();
-    // AG.AnimSunshine(app);
 
     const ReactContainer = useRef(null);
     useEffect(() => {

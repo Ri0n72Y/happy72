@@ -21,9 +21,9 @@ export function setBackground(app: PIXI.Application) {
     const bgImage = PIXI.Texture.from('../../assets/scenarios/Grass.png')
     const tilingSprite = new PIXI.TilingSprite(bgImage, app.screen.width, app.screen.height)
     app.stage.addChild(tilingSprite)
-    app.ticker.add(() => {
-        tilingSprite.tilePosition.y += 2;
-    })
+    // app.ticker.add(() => {
+    //     tilingSprite.tilePosition.y += 2;
+    // })
 }
 
 
