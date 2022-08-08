@@ -1,6 +1,7 @@
 import type { IBuildingProps, IEntityState, IMapProps, IMapSaveData } from "../utils/gameProps.typed";
 import sample from '../../assets/scenarios/sample.json';
 import { DefaultConfigProps, DefaultGameStateProps, IStoreProps } from "../Store";
+import PARAM from "../utils/parameters";
 
 enum SENARIOS {
     SAMPLE, ESAY, NORMAL, HARD, EXTREME,
@@ -12,7 +13,7 @@ export function MapLoader(name: SENARIOS): IStoreProps {
     return {
         map: { ...map, buildings: buildings },
         entityState: entityState,
-        gameState: DefaultGameStateProps,
+        gameState: { ...DefaultGameStateProps, sunlight: save.sunlight ?? PARAM.InitialSunlight },
         config: DefaultConfigProps,
     };
 }
@@ -20,6 +21,7 @@ export function MapLoader(name: SENARIOS): IStoreProps {
 function convertSave2Entity(save: IMapSaveData, buildings: (IBuildingProps | null)[][]): [(IBuildingProps | null)[][], IEntityState] {
     for (const building of save.buildings) {
         if (buildings[building.pos.x][building.pos.y] !== null) continue;
+        building.slots = [null, null, null, null];
         buildings[building.pos.x][building.pos.y] = building;
         buildings[building.pos.x + 1][building.pos.y + 1] = building;
         buildings[building.pos.x + 1][building.pos.y - 1] = building;
@@ -30,6 +32,7 @@ function convertSave2Entity(save: IMapSaveData, buildings: (IBuildingProps | nul
         {
             slimes: save.slimes,
             buildings: save.buildings,
+            sunlights: [],
         }
     ]
 }

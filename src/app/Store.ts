@@ -1,5 +1,6 @@
-import { IBuildingProps, IEntityState, IMapProps } from "./utils/gameProps.typed";
+import { IBuildingProps, IEntityState, IMapProps, ISlimeProps, Vec2 } from "./utils/gameProps.typed";
 import * as U from './utils';
+import PARAM from "./utils/parameters";
 
 export interface IConfigProps {
     isShowGrid: boolean;
@@ -12,9 +13,19 @@ export const DefaultConfigProps: IConfigProps = {
 
 export interface IGameStateProps {
     isPaused: boolean;
+    sunlight: number;
+    nextDay: {
+        slimeInfected: ISlimeProps[];
+        cellInfected: Vec2[];
+    }
 }
 export const DefaultGameStateProps: IGameStateProps = {
     isPaused: false,
+    sunlight: PARAM.InitialSunlight,
+    nextDay: {
+        slimeInfected: [],
+        cellInfected: [],
+    }
 }
 
 export interface IStoreProps {
@@ -42,6 +53,7 @@ export const initialStore: () => IStoreProps = () => ({
     entityState: {
         slimes: [],
         buildings: [],
+        sunlights: [],
     },
     gameState: DefaultGameStateProps,
     config: DefaultConfigProps,

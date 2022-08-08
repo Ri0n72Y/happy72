@@ -1,7 +1,21 @@
-import { Vec2 } from "../utils/gameProps.typed";
+import { IGameStateProps, Store } from "../Store";
+import { ISunlightProps, Vec2 } from "../utils/gameProps.typed";
 
-export interface ISunlightProps {
-    pos: Vec2, // 掉落的位置
-    value: number, // 包含阳光的数量
+export function CreateSunlightDrop(pos: Vec2, value: number): ISunlightProps {
+    const sun = {
+        pos: pos,
+        value: value,
+    }
+    Store.entityState.sunlights.push(sun);
+    return sun;
+}
+
+/**
+ * Dirty: update gameState
+ * @param sun 
+ * @param gameState 
+ */
+export function PickupSunlight(sun: ISunlightProps, gameState: IGameStateProps) {
+    gameState.sunlight += sun.value;
 }
 
