@@ -1,6 +1,7 @@
 import { PosPixel2Cell } from "../utils";
 import { IBuildingProps, ISlimeProps, Vec2 } from "../utils/gameProps.typed";
 import PARAM from "../utils/parameters";
+import { isSlimeDisease, isSlimeSicked } from "./SlimeData";
 
 /**
  * 计算史莱姆是否被传染
@@ -60,21 +61,73 @@ export function reduceHealthMorning(slimes: ISlimeProps[], TestedSlime: ISlimePr
         if (!slime.inSlot) {
             slime.health = dice < 0.04 ? 1 : Math.min(slime.health + 0.1, 0.8);
         }
-        if (slime.)
+        if (isSlimeSicked(slime) && !slime.inSlot)  // 小病伤身
+            slime.health -= dice * 0.2;
+        if (isSlimeDisease(slime) && !slime.inSlot) // 大病去世
+            slime.health -= 0.2;
+        if (!isSlimeSicked(slime) && !isSlimeDisease(slime)) {
             if (slime.infected) { // 瘟疫致病
                 slime.infectedDays ? slime.infectedDays++ : slime.infectedDays = 1;
                 const isSick = dice < PARAM.Slime.sickRate * (slime.infectedDays - PARAM.Slime.incubationMin);
                 if (isSick)
                     slime.tags.push({
                         key: 'sick',
-                        value: 1,
+                        value: 0,
                     });
             }
-        if (slime.health < 0.6) { // 虚弱致病
+            if (slime.health < 0.6) { // 虚弱致病
+                slime.tags.push({
+                    key: 'sick',
+                    value: 0,
+                })
+            }
+        }
+        if ((slime.health < 0.2 && !isSlimeDisease(slime))
+            || slime.infected && isSlimeSicked(slime) && slime.health < 0.35) {
+            if (slime.tags.find(t => t.key === 'antibody')) {
+                break; // 抗体不会变成重症
+            }
+            let index = 0;
+            slime.tags.forEach((t, i) => t.key === 'sick' && (index = i));
+            slime.tags.splice(index, 1);
             slime.tags.push({
-                key: 'sick',
-                value: 1,
-            })
+                key: 'disease',
+                value: 0,
+            });
+        }
+        slime.tags.forEach(t => t.value = (t.value ?? 0) + 1);
+        if (isSlimeSicked(slime)) {
+            const sick = slime.tags.find(t => t.key === 'sick');
+            if (sick.value > PARAM.Slime.sickHealDays && slime.health > 0.4) { // 自愈
+                let index = 0;
+                slime.tags.forEach((t, i) => t.key === 'sick' && (index = i));
+                slime.tags.splice(index, 1);
+                if (slime.infected) {
+                    slime.tags.forEach((t, i) => t.key === 'infected' && (index = i));
+                    slime.tags.splice(index, 1);
+                    slime.infected = false
+                    slime.tags.push({ // 增加免疫
+                        key: 'antibody',
+                        value: 0,
+                    })
+                }
+            }
+        }
+        if (slime.inSlot && slime.infected && slime.health > 0.8) {
+            let index = 0;
+            slime.tags.forEach((t, i) => t.key === 'sick' && (index = i));
+            slime.tags.splice(index, 1);
+            slime.tags.forEach((t, i) => t.key === 'disease' && (index = i));
+            slime.tags.splice(index, 1);
+            if (slime.infected) {
+                slime.tags.forEach((t, i) => t.key === 'infected' && (index = i));
+                slime.tags.splice(index, 1);
+                slime.infected = false
+                slime.tags.push({ // 增加免疫
+                    key: 'antibody',
+                    value: 0,
+                })
+            }
         }
     }
 }
