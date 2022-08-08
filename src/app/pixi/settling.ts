@@ -1,9 +1,29 @@
-import { IStoreProps } from "../Store";
+import { IStoreProps, Store } from "../Store";
 import { MorningSpawn } from "../utils";
 import { reduceBuildingMorning, settleSlot, updateSlots } from "./BuildingData";
 import { reduceHealthMorning, reduceSlimeInfection } from "./Infection";
 import { NatrualGrow, reduceSlimeSecond } from "./SlimeData";
 
+import * as PIXI from "pixi.js";
+import PARAM from "../utils/parameters";
+
+const SECOND = 60
+
+export function run(app: PIXI.Application) {
+    app.ticker.add((delta) => {
+        Store.gameState.count++;
+        if (Store.gameState.count % SECOND === 0) {
+            Store.gameState.second++;
+            SecondSettle(Store);
+        }
+        if (Store.gameState.second % (PARAM.DayTime / PARAM.Frequency)) {
+            PartialSettle(Store);
+        }
+        if (Store.gameState.second % PARAM.DayTime === 0) {
+            MorningSettle(Store);
+        }
+    })
+}
 /**
  * 结算每天早上的行动
  * @param store 

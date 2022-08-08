@@ -1,4 +1,4 @@
-import { IBuildingProps, IEntityState, IMapProps, ISlimeProps, Vec2 } from "./utils/gameProps.typed";
+import { IBuildingProps, IEntityState, IMapProps, ISlimeProps } from "./utils/gameProps.typed";
 import * as U from './utils';
 import PARAM from "./utils/parameters";
 
@@ -12,21 +12,22 @@ export const DefaultConfigProps: IConfigProps = {
 }
 
 export interface IGameStateProps {
+    count: number; second: number;
     isPaused: boolean;
     sunlight: number;
     daynight: 'day' | 'night',
     nextDay: {
         slimeInfected: ISlimeProps[];
-        cellInfected: Vec2[];
     }
 }
 export const DefaultGameStateProps: IGameStateProps = {
+    count: 0,
+    second: 0,
     isPaused: false,
     sunlight: PARAM.InitialSunlight,
     daynight: 'day',
     nextDay: {
         slimeInfected: [],
-        cellInfected: [],
     }
 }
 
