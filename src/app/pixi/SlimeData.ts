@@ -19,6 +19,38 @@ export function CreateSlimeData(pos: Vec2): ISlimeProps {
     });
 }
 
+export function reduceSlimeSecond(slimes: ISlimeProps[], store: IStoreProps) {
+    for (const slime of slimes) {
+        if (slime.health <= 0) {
+            slime.dying = true;
+            continue;
+        }
+        if (!slime.intent) {
+            slime.intent = GetSlimeIntent(slime, store);
+        } else if (slime.intent.key === 'IDLE') {
+            const dice = Math.random();
+            if (dice < PARAM.Slime.mindChangeRate * slime.intent.time) {
+                slime.intent = GetSlimeIntent(slime, store);
+            }
+        } else {
+            const dice = Math.random();
+            if (dice < PARAM.Slime.mindChangeRate * 0.2 * slime.intent.time) {
+                slime.intent = GetSlimeIntent(slime, store);
+            }
+        }
+        slime.intent.time++;
+    }
+}
+
+export function slimeMove(slime: ISlimeProps, deltatime: number): Vec2 {
+    if (slime.dying) {
+        return slime.pos;
+    }
+    const tention = U.normalize(U.vecSub(slime.intent.target, slime.pos));
+    const move = U.vecScale(tention, slime.intent.speed * U.CELL_SIZE * deltatime);
+    return U.vecAdd(slime.pos, move);
+}
+
 /**
  * Dirty: slime health reduce
  * @param slime 
@@ -28,6 +60,23 @@ export function NatrualGrow(slime: ISlimeProps): ISunlightProps {
     slime.health += PARAM.NaturalCost;
     return (CreateSunlightDrop(slime.pos, produce));
 }
+
+export function isSlimeSicked(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'sick').length > 0
+}
+export function isSlimeInfected(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'infected').length > 0
+}
+export function isSlimeDisease(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'disease').length > 0
+}
+export function isSlimeInSlot(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'in-slot').length > 0
+}
+export function isSlimeGainAntibody(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'antibody').length > 0
+}
+
 
 const slimeActions = ["heal", "test", "work", "idle"] as const;
 // type SlimeAction = (typeof slimeActions)[number];
