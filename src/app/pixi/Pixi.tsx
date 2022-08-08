@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import * as U from "../utils";
 import * as UI from "./UI";
 import { app } from "electron";
-import { init, AnimSlimee, AnimBuilding, AnimSunshine, playSound } from "./AnimGenerator";
+import { init, AnimSlimee, SingleSlimee, AnimBuilding, AnimSunshine, playSound } from "./AnimGenerator";
 import * as AG from "./AnimGenerator";
 import { Vec2 } from "../utils/gameProps.typed"
 
@@ -46,6 +46,7 @@ function Pixi() {
 
         () => AnimBuilding(app, "CABIN"),
         () => AnimSunshine(app),
+        () => SingleSlimee(app, "Blue"),
         // () => playSound()
         // () => AnimBuilding(app, type, pos),
     ];
