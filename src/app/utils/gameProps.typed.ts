@@ -27,7 +27,7 @@ export interface ISlotProps {
 export interface IBuildingProps { // 建筑的属性
     name?: string,
     type: BuildingType,
-    pos: Vec2 // 四个地图格子的左上格在网格上的坐标
+    pos: Vec2; // 四个地图格子的左上格在网格上的坐标
     tags: BUILDING_TAG[], // 建筑现有的buff栏
     slots?: (ISlotProps | null)[], // 现在提供的四个岗位的工作状态，0: 左上，1: 右上，2: 左下, 3:右下
     origin?: ISlimeProps,
@@ -69,6 +69,7 @@ export type SLIME_TAG = (typeof slimeTags)[number];
 
 const buildingTags = [
     'closed',
+    'blocked',
     'infected',
     'inmmune',
     'disinfected',
