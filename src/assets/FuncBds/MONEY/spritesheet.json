@@ -1,6 +1,6 @@
 {
 	"frames": {
-		"FACTORY_ground.png": {
+		"MONEY_ground.png": {
 			"frame": {
 				"x": 1,
 				"y": 1,
@@ -20,7 +20,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_0.png": {
+		"MONEY_cover_0.png": {
 			"frame": {
 				"x": 99,
 				"y": 1,
@@ -40,7 +40,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_1.png": {
+		"MONEY_cover_1.png": {
 			"frame": {
 				"x": 197,
 				"y": 1,
@@ -60,7 +60,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_2.png": {
+		"MONEY_cover_2.png": {
 			"frame": {
 				"x": 1,
 				"y": 99,
@@ -80,7 +80,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_3.png": {
+		"MONEY_cover_3.png": {
 			"frame": {
 				"x": 99,
 				"y": 99,
@@ -100,7 +100,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_4.png": {
+		"MONEY_cover_4.png": {
 			"frame": {
 				"x": 197,
 				"y": 99,
@@ -120,7 +120,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_5.png": {
+		"MONEY_cover_5.png": {
 			"frame": {
 				"x": 1,
 				"y": 197,
@@ -140,7 +140,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_6.png": {
+		"MONEY_cover_6.png": {
 			"frame": {
 				"x": 99,
 				"y": 197,
@@ -160,7 +160,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_7.png": {
+		"MONEY_cover_7.png": {
 			"frame": {
 				"x": 197,
 				"y": 197,
@@ -180,7 +180,7 @@
 				"h": 96
 			}
 		},
-		"FACTORY_cover_8.png": {
+		"MONEY_cover_8.png": {
 			"frame": {
 				"x": 295,
 				"y": 1,

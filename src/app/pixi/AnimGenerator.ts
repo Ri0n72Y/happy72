@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { ISlimeProps, Vec2 } from "../utils/gameProps.typed"
+import { ISlimeProps, Vec2, BuildingType } from "../utils/gameProps.typed"
 
 export function AnimSlimee(app: PIXI.Application, color: string) {
     app.loader
@@ -63,11 +63,8 @@ export function AnimSlimee(app: PIXI.Application, color: string) {
     }
 }
 
-export type Building =
-    "RESIDENTIAL" | "FACTORY" | "TEST_STATION" | "HOSPITAL"
-
 export function AnimBuilding(
-    app: PIXI.Application, type: Building, slime: ISlimeProps, pos: Vec2) {
+    app: PIXI.Application, type: BuildingType, slime: ISlimeProps, pos: Vec2) {
     app.loader
         .add('spritesheet', '../../assets/FuncBds/' + type + '/spritesheet.json')
         .load(onAssetsLoaded)
