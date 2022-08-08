@@ -74,7 +74,6 @@ export function AnimSlimee(app: PIXI.Application, color: string) {
     }
 }
 
-
 export function SingleSlimee(app: PIXI.Application, color: string) {
     const Textures = [];
     let i;
@@ -127,40 +126,6 @@ export function SingleSlimee(app: PIXI.Application, color: string) {
     }
 }
 
-export function AnimBuilding(
-    // app: PIXI.Application, type: BuildingType, pos: Vec2) {
-    app: PIXI.Application, type: BuildingType, pos: { w: number; h: number; }) {
-
-    const Textures = [];
-    let i;
-    for (i = 0; i <= 8; i++) {
-        const covtexture = PIXI.Texture.from(type + `_cover_${i}.png`);
-        Textures.push(covtexture);
-    }
-
-    const cover = new PIXI.AnimatedSprite(Textures);
-    cover.anchor.set(0.5);
-    cover.buttonMode = true;
-    cover.interactive = true;
-    cover.x = pos.w;
-    cover.y = pos.h;
-    cover.zIndex = 3; // 渲染图层
-    cover.gotoAndPlay(Math.random() * 27);
-    cover.animationSpeed = 0.1;
-
-    const groundtexture = PIXI.Texture.from(type + `_ground.png`);
-    const ground = new PIXI.Sprite(groundtexture);
-    ground.anchor.set(0.5);
-    ground.x = pos.w;
-    ground.y = pos.h;
-    // ground.x = 0.5 * app.screen.width; // 测试用
-    // ground.y = 0.5 * app.screen.height; // 测试用
-    ground.zIndex = 0; // 渲染图层
-
-    app.stage.addChild(ground);
-    app.stage.addChild(cover);
-}
-
 export function AnimSunshine(app: PIXI.Application, data: ISunlightProps) {
     const Textures = [];
     let i;
@@ -172,10 +137,8 @@ export function AnimSunshine(app: PIXI.Application, data: ISunlightProps) {
     for (j = 0; j < data.value; j++) {
         const sunshine = new PIXI.AnimatedSprite(Textures);
         sunshine.anchor.set(0.5);
-        // sunshine.x = pos.x;
-        // sunshine.y = pos.y;
-        sunshine.x = data.pos.x // 测试用
-        sunshine.y = data.pos.y; // 测试用
+        sunshine.x = data.pos.x
+        sunshine.y = data.pos.y; 
         sunshine.zIndex = 6; // 渲染图层
         sunshine.gotoAndPlay(Math.random() * 27);
         sunshine.animationSpeed = 0.1;

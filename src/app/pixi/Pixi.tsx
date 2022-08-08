@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 import * as U from "../utils";
 import * as UI from "./UI";
 import { app } from "electron";
-import { init, GeneBuilding, AnimSlimee, SingleSlimee, AnimBuilding, AnimSunshine, playSound } from "./AnimGenerator";
+import { init, GeneBuilding, AnimSlimee, SingleSlimee, AnimSunshine, playSound } from "./AnimGenerator";
 import * as AG from "./AnimGenerator";
 import { ISlimeProps, Vec2 } from "../utils/gameProps.typed"
 
