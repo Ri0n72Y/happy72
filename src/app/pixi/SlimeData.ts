@@ -29,6 +29,23 @@ export function NatrualGrow(slime: ISlimeProps): ISunlightProps {
     return (CreateSunlightDrop(slime.pos, produce));
 }
 
+export function isSlimeSicked(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'sick').length > 0
+}
+export function isSlimeInfected(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'infected').length > 0
+}
+export function isSlimeDisease(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'disease').length > 0
+}
+export function isSlimeInSlot(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'in-slot').length > 0
+}
+export function isSlimeGainAntibody(slime: ISlimeProps) {
+    return slime.tags.filter(t => t.key === 'antibody').length > 0
+}
+
+
 const slimeActions = ["heal", "test", "work", "idle"] as const;
 // type SlimeAction = (typeof slimeActions)[number];
 
