@@ -200,10 +200,22 @@ function slotWork(slime: ISlimeProps): number {
     return res;
 }
 function slotHeal(slime: ISlimeProps): number {
+    if (slime.infected) {
+        slime.tags.push({
+            key: 'infected',
+            value: slime.infectedDays,
+        })
+    }
     slime.health += PARAM.SlotHeal.hospital;
     return PARAM.SlotProduce.hospital;
 }
 function slotVaccine(slime: ISlimeProps): number {
+    if (slime.infected) {
+        slime.tags.push({
+            key: 'infected',
+            value: slime.infectedDays,
+        })
+    }
     slime.tags.push({
         key: "antibody",
         value: 0,
