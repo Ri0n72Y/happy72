@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import { ISlimeProps, Vec2, BuildingType } from "../utils/gameProps.typed"
+import { sound } from '@pixi/sound';
 
 export function init(app: PIXI.Application, funcs: (() => void)[], sources: { name: string; url: string; }[]) {
     app.loader
@@ -9,6 +10,9 @@ export function init(app: PIXI.Application, funcs: (() => void)[], sources: { na
                 func()
             }
         })
+}
+export function playSound() {
+    sound.play('mysound');
 }
 
 export function AnimSlimee(app: PIXI.Application, color: string) {
