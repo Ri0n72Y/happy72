@@ -44,10 +44,10 @@
                 "x": 100,
                 "y": 100
             },
-            "health": 80,
+            "health": 0.8,
             "tags": [
                 {
-                    "key": "infacted",
+                    "key": "infected",
                     "value": 1
                 }
             ]
