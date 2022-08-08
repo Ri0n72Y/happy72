@@ -3,6 +3,10 @@ import * as U from './utils';
 import PARAM from "./utils/parameters";
 import * as PIXI from "pixi.js";
 
+export const CELL_ROWS = 20 as const;
+export const CELL_COLS = 32 as const;
+export const CELL_SIZE = 48 as const;
+
 export interface IConfigProps {
     isShowGrid: boolean;
     isShowFlowCell: boolean;
@@ -56,6 +60,18 @@ export interface IStoreProps {
     config: IConfigProps,
 }
 
+function initArray(value: any, x: number, y: number): any[][] {
+    const arr: any[][] = [];
+    for (let i = 0; i < x; i++) {
+        const row: any[] = [];
+        for (let j = 0; j < y; j++) {
+            row.push(value);
+        }
+        arr.push(row);
+    }
+    return arr;
+}
+
 export const initialStore: () => IStoreProps = () => ({
     render: {
         slimes: [],
@@ -63,18 +79,10 @@ export const initialStore: () => IStoreProps = () => ({
         sunlights: [],
     },
     map: {
-        shape: new Array<boolean[]>(U.CELL_ROWS)
-            .fill([]).map(() =>
-                new Array<boolean>(U.CELL_COLS).fill(false)),
-        ways: new Array<boolean[]>(U.CELL_ROWS)
-            .fill([]).map(() =>
-                new Array<boolean>(U.CELL_COLS).fill(false)),
-        buildings: new Array<(IBuildingProps | null)[]>(U.CELL_ROWS)
-            .fill([]).map(() =>
-                new Array<IBuildingProps | null>(U.CELL_COLS).fill(null)),
-        infection: new Array<number[]>(U.CELL_ROWS)
-            .fill([]).map(() =>
-                new Array<number>(U.CELL_COLS).fill(0)),
+        shape: initArray(false, CELL_ROWS, CELL_COLS),
+        ways: initArray(false, CELL_ROWS, CELL_COLS),
+        buildings: initArray(null, CELL_ROWS, CELL_COLS),
+        infection: initArray(0, CELL_ROWS, CELL_COLS),
     },
     entityState: {
         slimes: [],
@@ -84,6 +92,7 @@ export const initialStore: () => IStoreProps = () => ({
     gameState: DefaultGameStateProps,
     config: DefaultConfigProps,
 })
+
 
 // eslint-disable-next-line prefer-const
 export const Store: IStoreProps = initialStore();

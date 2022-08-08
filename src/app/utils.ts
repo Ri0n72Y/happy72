@@ -1,12 +1,12 @@
 import { CreateSlimeData } from "./pixi/SlimeData";
 import { ISlimeProps, Vec2 } from "./utils/gameProps.typed";
 
-export const CANVAS_WIDTH = 1536;
-export const CANVAS_HEIGHT = 960;
+export const CANVAS_WIDTH = 1536 as const;
+export const CANVAS_HEIGHT = 960 as const;
 
-export const CELL_ROWS = 20;
-export const CELL_COLS = 32;
-export const CELL_SIZE = 48;
+export const CELL_ROWS = 20 as const;
+export const CELL_COLS = 32 as const;
+export const CELL_SIZE = 48 as const;
 
 export const BUILDING_RADIUS = Math.sqrt(CELL_SIZE ** 2 * 2);
 
@@ -68,10 +68,11 @@ export function initialSpawn(width: number, height: number): ISlimeProps[] {
 export function spawnSlimeData(nums: number): ISlimeProps[] {
     const res: ISlimeProps[] = [];
     for (let i = 0; i < nums; i++) {
-        res.push(CreateSlimeData({
+        const pos = {
             x: Math.random() * CANVAS_WIDTH,
             y: Math.random() * CANVAS_HEIGHT,
-        }));
+        }
+        res.push(CreateSlimeData(pos));
     }
     return res;
 }
@@ -88,10 +89,11 @@ export function MorningSpawn(currentSize: number, cap: number): ISlimeProps[] {
     const nums = Math.max(cap - nextNums, 0);
     const res: ISlimeProps[] = [];
     for (let i = 0; i < nums; i++) {
-        res.push(CreateSlimeData({
+        const pos = {
             x: Math.random() * CANVAS_WIDTH,
             y: Math.random() * CANVAS_HEIGHT,
-        }));
+        }
+        res.push(CreateSlimeData(pos));
     }
     return res;
 }
