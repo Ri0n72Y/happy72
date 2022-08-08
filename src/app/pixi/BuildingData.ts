@@ -236,7 +236,7 @@ function slotBlocked(slime: ISlimeProps) {
 }
 
 function slotRest(slime: ISlimeProps) {
-    slime.health += PARAM.ResidentialHeal;
+    slime.health = Math.min(PARAM.ResidentialHeal + slime.health, 1);
 }
 
 function getDailyCost(type: BuildingType) {

@@ -52,6 +52,34 @@ export function cellPolute(slime: ISlimeProps, infect: number[][]): (Vec2 | unde
 }
 
 /**
+ * 
+ */
+export function reduceHealthMorning(slimes: ISlimeProps[], TestedSlime: ISlimeProps[]) {
+    for (const slime of slimes) {
+        const dice = Math.random()
+        if (!slime.inSlot) {
+            slime.health = dice < 0.04 ? 1 : Math.min(slime.health + 0.1, 0.8);
+        }
+        if (slime.)
+            if (slime.infected) { // 瘟疫致病
+                slime.infectedDays ? slime.infectedDays++ : slime.infectedDays = 1;
+                const isSick = dice < PARAM.Slime.sickRate * (slime.infectedDays - PARAM.Slime.incubationMin);
+                if (isSick)
+                    slime.tags.push({
+                        key: 'sick',
+                        value: 1,
+                    });
+            }
+        if (slime.health < 0.6) { // 虚弱致病
+            slime.tags.push({
+                key: 'sick',
+                value: 1,
+            })
+        }
+    }
+}
+
+/**
  * 在每秒执行这个函数，让史莱姆去尝试感染格子并尝试被传染
  * 建议与其他函数错开执行，这个对性能影响相对大
  * @param slimes 
