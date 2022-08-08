@@ -1,6 +1,7 @@
-import { IBuildingProps, IEntityState, IMapProps, ISlimeProps } from "./utils/gameProps.typed";
+import { IBuildingProps, IEntityState, IMapProps, ISlimeProps, ISunlightProps } from "./utils/gameProps.typed";
 import * as U from './utils';
 import PARAM from "./utils/parameters";
+import * as PIXI from "pixi.js";
 
 export interface IConfigProps {
     isShowGrid: boolean;
@@ -31,14 +32,36 @@ export const DefaultGameStateProps: IGameStateProps = {
     }
 }
 
+interface SpritedSlime {
+    sprite: PIXI.AnimatedSprite,
+    data: ISlimeProps,
+}
+interface SpirtedBuilding {
+    sprite: PIXI.AnimatedSprite,
+    data: IBuildingProps,
+}
+interface SpritedSunlight {
+    sprite: PIXI.AnimatedSprite,
+    data: ISunlightProps,
+}
 export interface IStoreProps {
     map: IMapProps,
+    render?: {
+        slimes: SpritedSlime[],
+        buildings: SpirtedBuilding[],
+        sunlights: SpritedSunlight[],
+    }
     entityState: IEntityState,
     gameState: IGameStateProps,
     config: IConfigProps,
 }
 
 export const initialStore: () => IStoreProps = () => ({
+    render: {
+        slimes: [],
+        buildings: [],
+        sunlights: [],
+    },
     map: {
         shape: new Array<boolean[]>(U.CELL_ROWS)
             .fill([]).map(() =>
