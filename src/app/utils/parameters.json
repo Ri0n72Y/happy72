@@ -1,7 +1,7 @@
 {
     "TestingCharge": 5,
     "TenstingTime": 10,
-    "TestingCorrectness": 1.0,
+    "TestingCorrectness": 0.98,
     "DayTime": 50,
     "NightTime": 10,
     "NaturalClean": 3,
