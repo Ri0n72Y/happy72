@@ -1,0 +1,95 @@
+{
+	"frames": {
+		"Shrem_Blue_Frame_0.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 40,
+				"h": 40
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 40,
+				"h": 40
+			},
+			"sourceSize": {
+				"w": 40,
+				"h": 40
+			}
+		},
+		"Shrem_Blue_Frame_1.png": {
+			"frame": {
+				"x": 43,
+				"y": 1,
+				"w": 40,
+				"h": 40
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 40,
+				"h": 40
+			},
+			"sourceSize": {
+				"w": 40,
+				"h": 40
+			}
+		},
+		"Shrem_Blue_Frame_2.png": {
+			"frame": {
+				"x": 1,
+				"y": 43,
+				"w": 40,
+				"h": 40
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 40,
+				"h": 40
+			},
+			"sourceSize": {
+				"w": 40,
+				"h": 40
+			}
+		},
+		"Shrem_Blue_Frame_3.png": {
+			"frame": {
+				"x": 43,
+				"y": 43,
+				"w": 40,
+				"h": 40
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 40,
+				"h": 40
+			},
+			"sourceSize": {
+				"w": 40,
+				"h": 40
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 84,
+			"h": 84
+		},
+		"scale": "1"
+	}
+}

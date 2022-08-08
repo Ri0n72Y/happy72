@@ -47,6 +47,9 @@ export function vecRotate(v: Vec2, deg: number) {
         y: v.x * Math.sin(rad) + v.y * Math.cos(rad),
     }
 }
+export function vecEq(v1: Vec2, v2: Vec2) {
+    return v1.x === v2.x && v1.y == v2.y
+}
 
 export function deg2Rad(d: number) {
     return d * (Math.PI / 180);

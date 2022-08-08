@@ -613,6 +613,11 @@
   resolved "https://registry.npmmirror.com/@pixi/settings/-/settings-6.5.1.tgz#8603003b39cfbed3ebdb08dea56a39b52c5070e0"
   integrity sha512-pIjxcko8gWWizU5LnbkkFpQLsYs4P9v82H1GPWQ2FCJp/6UzKwd2Scob3ufnDti0WBzB8tUFLIratbOJDQg8KA==
 
+"@pixi/sound@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.npmmirror.com/@pixi/sound/-/sound-4.3.0.tgz#34ba6b286d9d99267cb74e92b569ac0871fa2299"
+  integrity sha512-90zvUZwr+Ooe8Y1CdebXBdr51jPdFMHDnuJa7BVSsT3xqyjgMozkLJSMfU0PcZJIbuFIcgPmyptIeG486nywog==
+
 "@pixi/sprite-animated@6.5.1":
   version "6.5.1"
   resolved "https://registry.npmmirror.com/@pixi/sprite-animated/-/sprite-animated-6.5.1.tgz#486841644d0281d69a99a1d132c40a2caea8b9fb"
