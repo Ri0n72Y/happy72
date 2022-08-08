@@ -7,13 +7,13 @@ import { buildingPolute, settleContact } from "./Infection";
 import { getNextPosition, GetSlimeIntent } from "./SlimeData";
 
 export function buildingAvailable(building: IBuildingProps) {
-    return building.tags.filter(b => b === 'closed' || b === 'blocked').length === 0 && hasEmptySlot(building);
+    return (isBuildingClosed || isBuildingBlocked) && hasEmptySlot(building);
 }
 export function isBuildingClosed(building: IBuildingProps) {
-    return building.tags.filter(b => b === 'closed').length > 0;
+    return building.tags.includes('closed');
 }
 export function isBuildingBlocked(building: IBuildingProps) {
-    return building.tags.filter(b => b === 'blocked').length > 0;
+    return building.tags.includes('blocked');
 }
 export function hasEmptySlot(building: IBuildingProps) {
     return building.slots?.filter(s => s === null).length > 0 ?? false;
@@ -145,6 +145,7 @@ export function takeAwaySlime(slime: ISlimeProps, b: IBuildingProps, i?: number)
  */
 export function settleSlot(buildings: IBuildingProps[]) {
     for (const b of buildings) {
+        if (isBuildingClosed) continue;
         b.slots.forEach(prop => {
             if (prop === null) {
                 return
@@ -152,22 +153,40 @@ export function settleSlot(buildings: IBuildingProps[]) {
             switch (b.type) {
                 case 'CABIN': Store.gameState.sunlight += slotCabin(prop.slime); return;
                 case 'HEAL': Store.gameState.sunlight += slotHeal(prop.slime); return;
-                case 'MONEY': Store.gameState.sunlight += slotWork(prop.slime); return;
-                case 'SLEEP': if (b.tags.filter(t => t === 'blocked'))
+                case 'MONEY':
+                    Store.gameState.sunlight += slotWork(prop.slime);
+                    if (isBuildingBlocked(b))
+                        slotBlocked(prop.slime)
+                    return;
+                case 'SLEEP': if (isBuildingBlocked(b))
                     slotBlocked(prop.slime)
                     return;
-                case 'TESTING': if (b.tags.filter(t => t === 'blocked'))
-                    slotBlocked(prop.slime)
-                    return;
+                case 'TESTING': return;
             }
         })
     }
 }
 
-/** */
+/**
+ * 结算休息恢复的健康、每天花费的维护成本
+ */
 export function reduceBuildingMorning(store: IStoreProps) {
     const buildings = store.entityState.buildings;
-
+    for (const b of buildings) {
+        if (b.type === 'SLEEP') {
+            b.slots.forEach(props => {
+                if (props !== null) {
+                    slotRest(props.slime)
+                }
+            });
+        }
+        const nextCost = getDailyCost(b.type);
+        if (store.gameState.sunlight < nextCost) {
+            b.tags.push("closed");
+        } else {
+            store.gameState.sunlight -= getDailyCost(b.type);
+        }
+    }
 }
 
 /**
