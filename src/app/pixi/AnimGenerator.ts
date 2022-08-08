@@ -126,22 +126,10 @@ export function SingleSlimee(app: PIXI.Application, color: string) {
     }
 }
 
-// function CreateSlime(slm:ISlimeProps, pos:Vec2) {
-    
-
-// }
-
-
-
-
-
 export function AnimBuilding(
     // app: PIXI.Application, type: BuildingType, pos: Vec2) {
-    app: PIXI.Application, type: BuildingType) {
-    // app.loader
-    //     .add('spritesheet2', '../../assets/FuncBds/' + type + '/spritesheet.json')
-    //     .load(onAssetsLoaded)
-    // function onAssetsLoaded() {
+    app: PIXI.Application, type: BuildingType, pos: { w: number; h: number; }) {
+
     const Textures = [];
     let i;
     for (i = 0; i <= 8; i++) {
@@ -153,8 +141,8 @@ export function AnimBuilding(
     cover.anchor.set(0.5);
     cover.buttonMode = true;
     cover.interactive = true;
-    cover.x = 0.5 * app.screen.width;
-    cover.y = 0.5 * app.screen.height;
+    cover.x = pos.w;
+    cover.y = pos.h;
     cover.zIndex = 3; // 渲染图层
     cover.gotoAndPlay(Math.random() * 27);
     cover.animationSpeed = 0.1;
@@ -162,10 +150,10 @@ export function AnimBuilding(
     const groundtexture = PIXI.Texture.from(type + `_ground.png`);
     const ground = new PIXI.Sprite(groundtexture);
     ground.anchor.set(0.5);
-    // ground.x = pos.x;
-    // ground.y = pos.y;
-    ground.x = 0.5 * app.screen.width; // 测试用
-    ground.y = 0.5 * app.screen.height; // 测试用
+    ground.x = pos.w;
+    ground.y = pos.h;
+    // ground.x = 0.5 * app.screen.width; // 测试用
+    // ground.y = 0.5 * app.screen.height; // 测试用
     ground.zIndex = 0; // 渲染图层
 
     app.stage.addChild(ground);

@@ -46,7 +46,14 @@ function Pixi() {
         () => AnimSlimee(app, "Green"),
         () => AnimSlimee(app, "Red"),
 
-        () => AnimBuilding(app, "CABIN"),
+        () => AnimBuilding(app, "HEAL", { w: 0.4 * app.screen.width, h: 0.4 * app.screen.height }),
+        () => AnimBuilding(app, "TESTING", { w: 0.4 * app.screen.width, h: 0.5 * app.screen.height }),
+        () => AnimBuilding(app, "MONEY", { w: 0.5 * app.screen.width, h: 0.4 * app.screen.height }),
+        () => AnimBuilding(app, "CABIN", { w: 0.5 * app.screen.width, h: 0.5 * app.screen.height }),
+        () => AnimBuilding(app, "SLEEP", { w: 0.6 * app.screen.width, h: 0.5 * app.screen.height }),
+        () => AnimBuilding(app, "SLEEP", { w: 0.6 * app.screen.width, h: 0.4 * app.screen.height }),
+
+
         () => AnimSunshine(app),
         () => SingleSlimee(app, "Blue"),
         // () => playSound()
