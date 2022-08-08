@@ -17,6 +17,7 @@ const PIXIConfig = {
 
 function Pixi() {
     const app = new PIXI.Application(PIXIConfig);
+    app.stage.sortableChildren = true;
     const sources = [
         { name: 'slimeB', url: '../../assets/Shrem_Blue/spritesheet.json' },
         { name: 'slimeG', url: '../../assets/Shrem_Green/spritesheet.json' },

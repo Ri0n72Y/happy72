@@ -87,8 +87,8 @@ export function AnimBuilding(
     cover.anchor.set(0.5);
     cover.buttonMode = true;
     cover.interactive = true;
-    cover.x = 0;
-    cover.y = 0;
+    cover.x = 0.5 * app.screen.width;
+    cover.y = 0.5 * app.screen.height;
     cover.zIndex = 3; // 渲染图层
     cover.gotoAndPlay(Math.random() * 27);
     cover.animationSpeed = 0.1;
@@ -98,12 +98,12 @@ export function AnimBuilding(
     ground.anchor.set(0.5);
     // ground.x = pos.x;
     // ground.y = pos.y;
-    ground.x = 0.3 * app.screen.width; // 测试用
-    ground.y = 0.3 * app.screen.height; // 测试用
+    ground.x = 0.5 * app.screen.width; // 测试用
+    ground.y = 0.5 * app.screen.height; // 测试用
     ground.zIndex = 0; // 渲染图层
 
-    ground.addChild(cover);
     app.stage.addChild(ground);
+    app.stage.addChild(cover);
 }
 
 // export function AnimSunshine(app: PIXI.Application, pos: Vec2) {
