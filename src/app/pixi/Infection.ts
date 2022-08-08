@@ -113,22 +113,12 @@ export function reduceHealthMorning(slimes: ISlimeProps[], TestedSlime: ISlimePr
                 }
             }
         }
-        if (slime.inSlot && slime.infected && slime.health > 0.8) {
-            let index = 0;
-            slime.tags.forEach((t, i) => t.key === 'sick' && (index = i));
-            slime.tags.splice(index, 1);
-            slime.tags.forEach((t, i) => t.key === 'disease' && (index = i));
-            slime.tags.splice(index, 1);
-            if (slime.infected) {
-                slime.tags.forEach((t, i) => t.key === 'infected' && (index = i));
-                slime.tags.splice(index, 1);
-                slime.infected = false
-                slime.tags.push({ // 增加免疫
-                    key: 'antibody',
-                    value: 0,
-                })
-            }
-        }
+    }
+    for (const slime of TestedSlime) {
+        slime.tags.push({
+            key: 'infected',
+            value: slime.infectedDays ?? 0,
+        })
     }
 }
 
