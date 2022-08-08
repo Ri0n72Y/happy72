@@ -12,7 +12,9 @@ export interface SlimeIntent {
 export interface ISlimeProps { // 史莱姆的属性
     name?: string, // ? 表示可以没有这一项
     health: number, // 0-1
+    dying?: boolean,
     infected?: boolean, // 实际是否已被感染
+    infectedDays?: number, // 已感染的时间
     isTested?: boolean, // 今天是否已经检测过核酸
     inSlot?: boolean, // 是否结算岗位产出
     intent?: SlimeIntent, // 意图

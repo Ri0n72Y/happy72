@@ -1,4 +1,5 @@
-import { Vec2 } from "./utils/gameProps.typed";
+import { CreateSlimeData } from "./pixi/SlimeData";
+import { ISlimeProps, Vec2 } from "./utils/gameProps.typed";
 
 export const CANVAS_WIDTH = 1536;
 export const CANVAS_HEIGHT = 960;
@@ -52,4 +53,45 @@ export function vecEq(v1: Vec2, v2: Vec2) {
 
 export function deg2Rad(d: number) {
     return d * (Math.PI / 180);
+}
+
+/**
+ * 
+ * @param width 格子列数
+ * @param height 格子行数
+ */
+export function initialSpawn(width: number, height: number): ISlimeProps[] {
+    const dice = Math.random() * 0.4 + 0.8;
+    const nums = Math.floor(width * height * 0.3 * dice);
+    return spawnSlimeData(nums)
+}
+export function spawnSlimeData(nums: number): ISlimeProps[] {
+    const res: ISlimeProps[] = [];
+    for (let i = 0; i < nums; i++) {
+        res.push(CreateSlimeData({
+            x: Math.random() * CANVAS_WIDTH,
+            y: Math.random() * CANVAS_HEIGHT,
+        }));
+    }
+    return res;
+}
+
+/**
+ * 人口大于承载力后不会增长
+ * @param currentSize 当前所有史莱姆数量
+ * @param cap 承载力，一般是width*height
+ * @returns 新增的史莱姆
+ */
+export function MorningSpawn(currentSize: number, cap: number): ISlimeProps[] {
+    const ratio = currentSize / cap;
+    const nextNums = 3 * (ratio) * (1 - ratio) * cap;
+    const nums = Math.max(cap - nextNums, 0);
+    const res: ISlimeProps[] = [];
+    for (let i = 0; i < nums; i++) {
+        res.push(CreateSlimeData({
+            x: Math.random() * CANVAS_WIDTH,
+            y: Math.random() * CANVAS_HEIGHT,
+        }));
+    }
+    return res;
 }

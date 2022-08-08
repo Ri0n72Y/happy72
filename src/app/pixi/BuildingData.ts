@@ -1,4 +1,4 @@
-import { Store } from "../Store";
+import { IStoreProps, Store } from "../Store";
 import { PosCell2Pixel, PosPixel2Cell } from "../utils";
 import { BuildingType, IBuildingProps, ISlimeProps, Vec2 } from "../utils/gameProps.typed"
 import PARAM from "../utils/parameters";
@@ -7,11 +7,20 @@ import { buildingPolute, settleContact } from "./Infection";
 import { getNextPosition, GetSlimeIntent } from "./SlimeData";
 
 export function buildingAvailable(building: IBuildingProps) {
-    return building.tags.filter(b => b === 'closed' || b === 'blocked').length === 0 && hasEmptySlot(building);
+    return (isBuildingClosed || isBuildingBlocked) && hasEmptySlot(building);
 }
-
+export function isBuildingClosed(building: IBuildingProps) {
+    return building.tags.includes('closed');
+}
+export function isBuildingBlocked(building: IBuildingProps) {
+    return building.tags.includes('blocked');
+}
 export function hasEmptySlot(building: IBuildingProps) {
     return building.slots?.filter(s => s === null).length > 0 ?? false;
+}
+
+export function disinfection(building: IBuildingProps) {
+    building.tags.push("disinfected");
 }
 
 /**
@@ -22,21 +31,32 @@ export function hasEmptySlot(building: IBuildingProps) {
  * @returns 
  */
 export function handleSlimeIntoBuilding(slime: ISlimeProps, building: IBuildingProps) {
-    if (!buildingAvailable(building)) return;
+    if (isBuildingClosed(building) || !hasEmptySlot(building)) return;
     for (let i = 0; i < 4; i++) {
         if (building.slots[i] === null) {
             const isSick = slime.tags.filter(t => t.key === 'sick' || t.key === 'disease').length > 0;
-            building.slots[i] = {
-                slime,
-                countDown: isSick ? -1 : 10,
-            };
+
             slime.inSlot = true;
             if (!isSick) {
                 switch (building.type) {
-                    case 'CABIN': Store.gameState.sunlight -= slotVaccine(slime); break;
-                    case 'HEAL': Store.gameState.sunlight -= slotVaccine(slime); break;
-                    case 'TESTING': Store.gameState.sunlight -= slotTest(slime, Store.gameState.nextDay.slimeInfected); break;
-                    default: break;
+                    case 'CABIN':
+                        Store.gameState.sunlight -= slotVaccine(slime);
+                        building.slots[i] = { slime, countDown: isSick ? -1 : 10, };
+                        break;
+                    case 'HEAL':
+                        Store.gameState.sunlight -= slotVaccine(slime);
+                        building.slots[i] = { slime, countDown: isSick ? -1 : 10, };
+                        break;
+                    case 'SLEEP':
+                        building.slots[i] = { slime, countDown: -1, };
+                        break;
+                    case 'MONEY':
+                        building.slots[i] = { slime, countDown: -1, };
+                        break;
+                    case 'TESTING':
+                        Store.gameState.sunlight -= slotTest(slime, Store.gameState.nextDay.slimeInfected);
+                        building.slots[i] = { slime, countDown: 10, };
+                        break;
                 }
             }
             return;
@@ -76,13 +96,17 @@ export function CreateBuilding(type: BuildingType, slime: ISlimeProps, pos: Vec2
 }
 
 /**
- * 每秒结算一次该方法
+ * 每秒结算一次该方法，更新所有格子的计时器
  * @param buildings 
  */
-export function updateSlots(buildings: IBuildingProps[]) {
+export function updateSlots(buildings: IBuildingProps[], day: 'day'|'night' = 'day') {
     for (const b of buildings) {
         b.slots.forEach((prop, i) => {
             if (prop === null) { // 没有上岗或者factory里搬砖
+                return;
+            }
+            if (prop.slime.dying) {
+                takeAwaySlime(prop.slime, b, i);
                 return;
             }
             // 传染
@@ -104,6 +128,12 @@ export function updateSlots(buildings: IBuildingProps[]) {
                 takeAwaySlime(prop.slime, b, i);
                 return;
             }
+            if (day === 'day' && b.type === 'SLEEP' && !isBuildingBlocked(b)) { // 在白天史莱姆不会在房间里呆着
+                const dice = Math.random();
+                if (dice < 0.8) {
+                    takeAwaySlime(prop.slime, b, i);
+                }
+            }
         })
     }
 }
@@ -117,28 +147,72 @@ export function takeAwaySlime(slime: ISlimeProps, b: IBuildingProps, i?: number)
 }
 
 /**
- * 一天结算<PARAM.Frequency>次该方法
+ * 一天结算<PARAM.Frequency>次该方法（默认5次）
  * 结算阳光和健康值
  * @param buildings 
  */
 export function settleSlot(buildings: IBuildingProps[]) {
     for (const b of buildings) {
-        b.slots.forEach(prop => {
+        if (isBuildingClosed) continue;
+        b.slots.forEach((prop, i) => {
             if (prop === null) {
                 return
             }
             switch (b.type) {
                 case 'CABIN': Store.gameState.sunlight += slotCabin(prop.slime); return;
-                case 'HEAL': Store.gameState.sunlight += slotHeal(prop.slime); return;
-                case 'MONEY': Store.gameState.sunlight += slotWork(prop.slime); return;
-                case 'SLEEP': if (b.tags.filter(t => t === 'blocked'))
+                case 'HEAL':
+                    Store.gameState.sunlight += slotHeal(prop.slime);
+                    if (prop.slime.health >= 0.8) {
+                        let index = 0;
+                        prop.slime.tags.forEach((t, i) => t.key === 'sick' && (index = i));
+                        prop.slime.tags.splice(index, 1);
+                        prop.slime.tags.forEach((t, i) => t.key === 'disease' && (index = i));
+                        prop.slime.tags.splice(index, 1);
+                        if (prop.slime.infected) {
+                            prop.slime.tags.forEach((t, i) => t.key === 'infected' && (index = i));
+                            prop.slime.tags.splice(index, 1);
+                            prop.slime.infected = false
+                        }
+                        prop.slime.tags.push({ // 增加免疫
+                            key: 'antibody',
+                            value: 0,
+                        })
+                        takeAwaySlime(prop.slime, b, i)
+                    }
+                    return;
+                case 'MONEY':
+                    Store.gameState.sunlight += slotWork(prop.slime);
+                    if (isBuildingBlocked(b))
+                        slotBlocked(prop.slime)
+                    return;
+                case 'SLEEP': if (isBuildingBlocked(b))
                     slotBlocked(prop.slime)
                     return;
-                case 'TESTING': if (b.tags.filter(t => t === 'blocked'))
-                    slotBlocked(prop.slime)
-                    return;
+                case 'TESTING': return;
             }
         })
+    }
+}
+
+/**
+ * 结算休息恢复的健康、每天花费的维护成本
+ */
+export function reduceBuildingMorning(store: IStoreProps) {
+    const buildings = store.entityState.buildings;
+    for (const b of buildings) {
+        if (b.type === 'SLEEP') {
+            b.slots.forEach(props => {
+                if (props !== null) {
+                    slotRest(props.slime)
+                }
+            });
+        }
+        const nextCost = getDailyCost(b.type);
+        if (store.gameState.sunlight < nextCost) {
+            b.tags.push("closed");
+        } else {
+            store.gameState.sunlight -= getDailyCost(b.type);
+        }
     }
 }
 
@@ -153,10 +227,22 @@ function slotWork(slime: ISlimeProps): number {
     return res;
 }
 function slotHeal(slime: ISlimeProps): number {
+    if (slime.infected) {
+        slime.tags.push({
+            key: 'infected',
+            value: slime.infectedDays,
+        })
+    }
     slime.health += PARAM.SlotHeal.hospital;
     return PARAM.SlotProduce.hospital;
 }
 function slotVaccine(slime: ISlimeProps): number {
+    if (slime.infected) {
+        slime.tags.push({
+            key: 'infected',
+            value: slime.infectedDays,
+        })
+    }
     slime.tags.push({
         key: "antibody",
         value: 0,
@@ -186,6 +272,10 @@ function slotTest(slime: ISlimeProps, infected: ISlimeProps[]): number {
 function slotBlocked(slime: ISlimeProps) {
     slime.health += PARAM.SlotHeal.residential;
     return PARAM.SlotProduce.residential;
+}
+
+function slotRest(slime: ISlimeProps) {
+    slime.health = Math.min(PARAM.ResidentialHeal + slime.health, 1);
 }
 
 function getDailyCost(type: BuildingType) {
