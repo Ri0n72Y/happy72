@@ -2,7 +2,7 @@ import { IStoreProps } from "../Store";
 import * as U from "../utils";
 import { IBuildingProps, ISlimeProps, ISunlightProps, SlimeIntent, Vec2 } from "../utils/gameProps.typed";
 import PARAM from "../utils/parameters";
-import { hasEmptySlot } from "./BuildingData";
+import { buildingAvailable } from "./BuildingData";
 import { GetNameDrawer } from "./DrawRandomName";
 import { checkCollision } from "./Map";
 import { CreateSunlightDrop } from "./Sunlight";
@@ -117,7 +117,7 @@ export function GetSlimeIntent(slime: ISlimeProps, store: IStoreProps): SlimeInt
  * @param ways 
  * @returns a new position, return pos if no move available;
  */
-function getNextPosition(pos: Vec2, direction: Vec2, speed: number, ways: boolean[][]) {
+export function getNextPosition(pos: Vec2, direction: Vec2, speed: number, ways: boolean[][]) {
     const forward = {
         x: direction.x * speed * U.CELL_SIZE,
         y: direction.y * speed * U.CELL_SIZE,
@@ -144,9 +144,9 @@ function getAvailableAction(pos: Vec2, buildings: IBuildingProps[]) {
             pos, PARAM.Slime.searchRadius * U.CELL_SIZE,
             b.pos, U.BUILDING_RADIUS),
     })).filter(b => b.dist > 0);
-    const works = list.filter(b => b.building.type === "MONEY" && hasEmptySlot(b.building));
-    const tests = list.filter(b => b.building.type === "TESTING" && hasEmptySlot(b.building));
-    const heals = list.filter(b => (b.building.type === "HEAL" || b.building.type === "CABIN") && hasEmptySlot(b.building));
+    const works = list.filter(b => b.building.type === "MONEY" && buildingAvailable(b.building));
+    const tests = list.filter(b => b.building.type === "TESTING" && buildingAvailable(b.building));
+    const heals = list.filter(b => (b.building.type === "HEAL" || b.building.type === "CABIN") && buildingAvailable(b.building));
     return {
         work: works.length > 0
             ? works.reduce((p, c) => p.dist > c.dist ? p : c)
