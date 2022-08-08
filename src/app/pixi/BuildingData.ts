@@ -1,4 +1,4 @@
-import { Store } from "../Store";
+import { IStoreProps, Store } from "../Store";
 import { PosCell2Pixel, PosPixel2Cell } from "../utils";
 import { BuildingType, IBuildingProps, ISlimeProps, Vec2 } from "../utils/gameProps.typed"
 import PARAM from "../utils/parameters";
@@ -9,7 +9,12 @@ import { getNextPosition, GetSlimeIntent } from "./SlimeData";
 export function buildingAvailable(building: IBuildingProps) {
     return building.tags.filter(b => b === 'closed' || b === 'blocked').length === 0 && hasEmptySlot(building);
 }
-
+export function isBuildingClosed(building: IBuildingProps) {
+    return building.tags.filter(b => b === 'closed').length > 0;
+}
+export function isBuildingBlocked(building: IBuildingProps) {
+    return building.tags.filter(b => b === 'blocked').length > 0;
+}
 export function hasEmptySlot(building: IBuildingProps) {
     return building.slots?.filter(s => s === null).length > 0 ?? false;
 }
@@ -22,21 +27,32 @@ export function hasEmptySlot(building: IBuildingProps) {
  * @returns 
  */
 export function handleSlimeIntoBuilding(slime: ISlimeProps, building: IBuildingProps) {
-    if (!buildingAvailable(building)) return;
+    if (isBuildingClosed(building) || !hasEmptySlot(building)) return;
     for (let i = 0; i < 4; i++) {
         if (building.slots[i] === null) {
             const isSick = slime.tags.filter(t => t.key === 'sick' || t.key === 'disease').length > 0;
-            building.slots[i] = {
-                slime,
-                countDown: isSick ? -1 : 10,
-            };
+
             slime.inSlot = true;
             if (!isSick) {
                 switch (building.type) {
-                    case 'CABIN': Store.gameState.sunlight -= slotVaccine(slime); break;
-                    case 'HEAL': Store.gameState.sunlight -= slotVaccine(slime); break;
-                    case 'TESTING': Store.gameState.sunlight -= slotTest(slime, Store.gameState.nextDay.slimeInfected); break;
-                    default: break;
+                    case 'CABIN':
+                        Store.gameState.sunlight -= slotVaccine(slime);
+                        building.slots[i] = { slime, countDown: isSick ? -1 : 10, };
+                        break;
+                    case 'HEAL':
+                        Store.gameState.sunlight -= slotVaccine(slime);
+                        building.slots[i] = { slime, countDown: isSick ? -1 : 10, };
+                        break;
+                    case 'SLEEP':
+                        building.slots[i] = { slime, countDown: -1, };
+                        break;
+                    case 'MONEY':
+                        building.slots[i] = { slime, countDown: -1, };
+                        break;
+                    case 'TESTING':
+                        Store.gameState.sunlight -= slotTest(slime, Store.gameState.nextDay.slimeInfected);
+                        building.slots[i] = { slime, countDown: 10, };
+                        break;
                 }
             }
             return;
@@ -76,10 +92,10 @@ export function CreateBuilding(type: BuildingType, slime: ISlimeProps, pos: Vec2
 }
 
 /**
- * 每秒结算一次该方法
+ * 每秒结算一次该方法，更新所有格子的计时器
  * @param buildings 
  */
-export function updateSlots(buildings: IBuildingProps[]) {
+export function updateSlots(buildings: IBuildingProps[], day: 'day'|'night' = 'day') {
     for (const b of buildings) {
         b.slots.forEach((prop, i) => {
             if (prop === null) { // 没有上岗或者factory里搬砖
@@ -104,6 +120,12 @@ export function updateSlots(buildings: IBuildingProps[]) {
                 takeAwaySlime(prop.slime, b, i);
                 return;
             }
+            if (day === 'day' && b.type === 'SLEEP' && !isBuildingBlocked(b)) { // 在白天史莱姆不会在房间里呆着
+                const dice = Math.random();
+                if (dice < 0.8) {
+                    takeAwaySlime(prop.slime, b, i);
+                }
+            }
         })
     }
 }
@@ -117,7 +139,7 @@ export function takeAwaySlime(slime: ISlimeProps, b: IBuildingProps, i?: number)
 }
 
 /**
- * 一天结算<PARAM.Frequency>次该方法
+ * 一天结算<PARAM.Frequency>次该方法（默认5次）
  * 结算阳光和健康值
  * @param buildings 
  */
@@ -140,6 +162,12 @@ export function settleSlot(buildings: IBuildingProps[]) {
             }
         })
     }
+}
+
+/** */
+export function reduceBuildingMorning(store: IStoreProps) {
+    const buildings = store.entityState.buildings;
+
 }
 
 /**
@@ -186,6 +214,10 @@ function slotTest(slime: ISlimeProps, infected: ISlimeProps[]): number {
 function slotBlocked(slime: ISlimeProps) {
     slime.health += PARAM.SlotHeal.residential;
     return PARAM.SlotProduce.residential;
+}
+
+function slotRest(slime: ISlimeProps) {
+    slime.health += PARAM.ResidentialHeal;
 }
 
 function getDailyCost(type: BuildingType) {
