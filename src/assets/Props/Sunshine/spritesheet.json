@@ -1,83 +1,103 @@
 {
 	"frames": {
-		"Shrem_40x40_outline_0.png": {
+		"Props_SunshineFrame_0.png": {
 			"frame": {
 				"x": 1,
 				"y": 1,
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			},
 			"sourceSize": {
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			}
 		},
-		"Shrem_40x40_outline_1.png": {
+		"Props_SunshineFrame_1.png": {
 			"frame": {
-				"x": 43,
+				"x": 99,
 				"y": 1,
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			},
 			"sourceSize": {
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			}
 		},
-		"Shrem_40x40_outline_2.png": {
+		"Props_SunshineFrame_2.png": {
 			"frame": {
 				"x": 1,
-				"y": 43,
-				"w": 40,
-				"h": 40
+				"y": 99,
+				"w": 96,
+				"h": 96
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			},
 			"sourceSize": {
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			}
 		},
-		"Shrem_40x40_outline_3.png": {
+		"Props_SunshineFrame_3.png": {
 			"frame": {
-				"x": 43,
-				"y": 43,
-				"w": 40,
-				"h": 40
+				"x": 99,
+				"y": 99,
+				"w": 96,
+				"h": 96
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
 			},
 			"sourceSize": {
-				"w": 40,
-				"h": 40
+				"w": 96,
+				"h": 96
+			}
+		},
+		"Props_SunshineFrame_4.png": {
+			"frame": {
+				"x": 197,
+				"y": 1,
+				"w": 96,
+				"h": 96
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 96,
+				"h": 96
+			},
+			"sourceSize": {
+				"w": 96,
+				"h": 96
 			}
 		}
 	},
@@ -87,8 +107,8 @@
 		"image": "spritesheet.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 84,
-			"h": 84
+			"w": 294,
+			"h": 196
 		},
 		"scale": "1"
 	}
