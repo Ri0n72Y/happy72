@@ -126,7 +126,10 @@ export function SingleSlimee(app: PIXI.Application, color: string) {
     }
 }
 
+// function CreateSlime(slm:ISlimeProps, pos:Vec2) {
+    
 
+// }
 
 
 
