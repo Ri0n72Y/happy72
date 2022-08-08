@@ -2,6 +2,7 @@ import { Store } from "../Store";
 import { PosCell2Pixel } from "../utils";
 import { BuildingType, IBuildingProps, ISlimeProps, Vec2 } from "../utils/gameProps.typed"
 import PARAM from "../utils/parameters";
+import { GetNameDrawer } from "./DrawRandomName";
 import { buildingPolute, settleContact } from "./Infection";
 import { getNextPosition, GetSlimeIntent } from "./SlimeData";
 
@@ -23,8 +24,9 @@ export function hasEmptySlot(building: IBuildingProps) {
  */
 export function CreateBuilding(type: BuildingType, slime: ISlimeProps, pos: Vec2): IBuildingProps {
     Store.gameState.sunlight -= getBuildCost(type);
+    const drawer = GetNameDrawer();
     return ({
-        name: `${slime.name}'s ROOM`,
+        name: `${slime.name ?? drawer.getName()}'s ROOM`,
         type: type,
         pos: pos,
         tags: [],
