@@ -146,13 +146,32 @@ export function takeAwaySlime(slime: ISlimeProps, b: IBuildingProps, i?: number)
 export function settleSlot(buildings: IBuildingProps[]) {
     for (const b of buildings) {
         if (isBuildingClosed) continue;
-        b.slots.forEach(prop => {
+        b.slots.forEach((prop, i) => {
             if (prop === null) {
                 return
             }
             switch (b.type) {
                 case 'CABIN': Store.gameState.sunlight += slotCabin(prop.slime); return;
-                case 'HEAL': Store.gameState.sunlight += slotHeal(prop.slime); return;
+                case 'HEAL':
+                    Store.gameState.sunlight += slotHeal(prop.slime);
+                    if (prop.slime.health >= 0.8) {
+                        let index = 0;
+                        prop.slime.tags.forEach((t, i) => t.key === 'sick' && (index = i));
+                        prop.slime.tags.splice(index, 1);
+                        prop.slime.tags.forEach((t, i) => t.key === 'disease' && (index = i));
+                        prop.slime.tags.splice(index, 1);
+                        if (prop.slime.infected) {
+                            prop.slime.tags.forEach((t, i) => t.key === 'infected' && (index = i));
+                            prop.slime.tags.splice(index, 1);
+                            prop.slime.infected = false
+                        }
+                        prop.slime.tags.push({ // 增加免疫
+                            key: 'antibody',
+                            value: 0,
+                        })
+                        takeAwaySlime(prop.slime, b, i)
+                    }
+                    return;
                 case 'MONEY':
                     Store.gameState.sunlight += slotWork(prop.slime);
                     if (isBuildingBlocked(b))
