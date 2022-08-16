@@ -94,6 +94,7 @@
     "pixi.js": "^6.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typed-css-modules-loader": "^0.0.18"
+    "typed-css-modules-loader": "^0.0.18",
+    "webpack-node-externals": "^3.0.0"
   }
 }

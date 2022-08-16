@@ -107,7 +107,7 @@ function Pixi() {
                 value: 1
             }),
         () => SingleSlimee(app, "Blue"),
-        // () => playSound()
+        () => playSound()
         // () => AnimBuilding(app, type, pos),
     ];
     init(app, functions, sources);
