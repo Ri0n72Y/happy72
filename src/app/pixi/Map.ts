@@ -3,5 +3,6 @@ import { Vec2 } from "../utils/gameProps.typed";
 
 export function checkCollision(pos: Vec2, ways: boolean[][]) {
     const cell = PosPixel2Cell(pos);
-    return ways[cell.x][cell.y];
+    console.log(pos, cell, ways)
+    return ways[Math.max(Math.min(31, cell.y), 0)][Math.max(Math.min(19, cell.x), 0)];
 }

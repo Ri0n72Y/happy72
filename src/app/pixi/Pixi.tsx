@@ -6,6 +6,7 @@ import { app } from "electron";
 import { init, GeneBuilding, AnimSlimee, SingleSlimee, AnimSunshine, playSound } from "./AnimGenerator";
 import * as AG from "./AnimGenerator";
 import { ISlimeProps, Vec2 } from "../utils/gameProps.typed"
+import { run } from "./settling";
 
 const PIXIConfig = {
     width: U.CANVAS_WIDTH,
@@ -42,72 +43,75 @@ function Pixi() {
 
     ];
     const functions = [
-        () => AnimSlimee(app, "Blue"),
-        () => AnimSlimee(app, "Green"),
-        () => AnimSlimee(app, "Red"),
+        () => run(app),
+        () => playSound(),
+
+        // () => AnimSlimee(app, "Blue"),
+        // () => AnimSlimee(app, "Green"),
+        // () => AnimSlimee(app, "Red"),
 
 
-        () => GeneBuilding(app,
-            {
-                type: "HEAL",
-                pos: {
-                    x: 0.4 * app.screen.width, y: 0.4 * app.screen.height
-                },
-                tags: []
-            }),
-        () => GeneBuilding(app,
-            {
-                type: "TESTING",
-                pos: {
-                    x: 0.4 * app.screen.width, y: 0.5 * app.screen.height
-                },
-                tags: []
-            }),
-        () => GeneBuilding(app,
-            {
-                type: "MONEY",
-                pos: {
-                    x: 0.5 * app.screen.width, y: 0.4 * app.screen.height
-                },
-                tags: []
-            }),
-        () => GeneBuilding(app,
-            {
-                type: "CABIN",
-                pos: {
-                    x: 0.5 * app.screen.width, y: 0.5 * app.screen.height
-                },
-                tags: []
-            }),
-        () => GeneBuilding(app,
-            {
-                type: "SLEEP",
-                pos: {
-                    x: 0.6 * app.screen.width, y: 0.5 * app.screen.height
-                },
-                tags: []
-            }),
-        () => GeneBuilding(app,
-            {
-                type: "SLEEP",
-                pos: {
-                    x: 0.6 * app.screen.width, y: 0.4 * app.screen.height
-                },
-                tags: []
-            }),
+        // () => GeneBuilding(app,
+        //     {
+        //         type: "HEAL",
+        //         pos: {
+        //             x: 0.4 * app.screen.width, y: 0.4 * app.screen.height
+        //         },
+        //         tags: []
+        //     }),
+        // () => GeneBuilding(app,
+        //     {
+        //         type: "TESTING",
+        //         pos: {
+        //             x: 0.4 * app.screen.width, y: 0.5 * app.screen.height
+        //         },
+        //         tags: []
+        //     }),
+        // () => GeneBuilding(app,
+        //     {
+        //         type: "MONEY",
+        //         pos: {
+        //             x: 0.5 * app.screen.width, y: 0.4 * app.screen.height
+        //         },
+        //         tags: []
+        //     }),
+        // () => GeneBuilding(app,
+        //     {
+        //         type: "CABIN",
+        //         pos: {
+        //             x: 0.5 * app.screen.width, y: 0.5 * app.screen.height
+        //         },
+        //         tags: []
+        //     }),
+        // () => GeneBuilding(app,
+        //     {
+        //         type: "SLEEP",
+        //         pos: {
+        //             x: 0.6 * app.screen.width, y: 0.5 * app.screen.height
+        //         },
+        //         tags: []
+        //     }),
+        // () => GeneBuilding(app,
+        //     {
+        //         type: "SLEEP",
+        //         pos: {
+        //             x: 0.6 * app.screen.width, y: 0.4 * app.screen.height
+        //         },
+        //         tags: []
+        //     }),
 
-        () => AnimSunshine(app,
-            {
-                pos: { x: 0.48 * app.screen.width, y: 0.35 * app.screen.height },
-                value: 2
-            }),
-        () => AnimSunshine(app,
-            {
-                pos: { x: 0.4 * app.screen.width, y: 0.5 * app.screen.height },
-                value: 1
-            }),
-        () => SingleSlimee(app, "Blue"),
-        () => playSound()
+        // () => AnimSunshine(app,
+        //     {
+        //         pos: { x: 0.48 * app.screen.width, y: 0.35 * app.screen.height },
+        //         value: 2
+        //     }),
+        // () => AnimSunshine(app,
+        //     {
+        //         pos: { x: 0.4 * app.screen.width, y: 0.5 * app.screen.height },
+        //         value: 1
+        //     }),
+        // () => SingleSlimee(app, "Blue"),
+        // () => playSound()
         // () => AnimBuilding(app, type, pos),
     ];
     init(app, functions, sources);

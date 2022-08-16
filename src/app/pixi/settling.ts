@@ -1,17 +1,19 @@
 import { IStoreProps, Store } from "../Store";
-import { MorningSpawn } from "../utils";
+import { initialSpawn, MorningSpawn } from "../utils";
 import { reduceBuildingMorning, settleSlot, updateSlots } from "./BuildingData";
 import { reduceHealthMorning, reduceSlimeInfection } from "./Infection";
-import { NatrualGrow, reduceSlimeSecond } from "./SlimeData";
+import { NatrualGrow, reduceSlimeSecond, slimeMove } from "./SlimeData";
 
 import * as PIXI from "pixi.js";
 import PARAM from "../utils/parameters";
+import { init } from "./AnimGenerator";
+import { CreateSlimeSprite } from "./Slime";
 
 const SECOND = 60
 
 export function run(app: PIXI.Application) {
+    initApp(app);
     app.ticker.add((delta) => {
-        Store.gameState.count++;
         if (Store.gameState.count % SECOND === 0) {
             Store.gameState.second++;
             SecondSettle(Store);
@@ -22,7 +24,32 @@ export function run(app: PIXI.Application) {
         if (Store.gameState.second % PARAM.DayTime === 0) {
             MorningSettle(Store);
         }
+
+        Store.gameState.count++;
+        render(app, delta);
     })
+}
+
+export function initApp(app: PIXI.Application) {
+    const slimes = initialSpawn(32, 20);
+    slimes.forEach(slime => {
+        Store.render.slimes.push({
+            data: slime,
+            sprite: CreateSlimeSprite(app, slime),
+        });
+        Store.entityState.slimes.push(slime);
+    })
+    SecondSettle(Store);
+    MorningSettle(Store);
+}
+
+export function render(app: PIXI.Application, delta: number) {
+    Store.render.slimes.forEach(slime => {
+        const move = slimeMove(slime.data, delta);
+        slime.sprite.x = move.x;
+        slime.sprite.y = move.y;
+        slime.sprite.update(delta);
+    });
 }
 /**
  * 结算每天早上的行动
