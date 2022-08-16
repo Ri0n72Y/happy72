@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
-import { BuildingType } from "../utils/gameProps.typed"
+import { ISlimeProps, IBuildingProps, Vec2, BuildingType, ISunlightProps } from "../utils/gameProps.typed"
 import { sound } from '@pixi/sound';
+import { CreateBuilding } from "./BuildingData";
 
 export function init(app: PIXI.Application, funcs: (() => void)[], sources: { name: string; url: string; }[]) {
     app.loader
@@ -73,7 +74,6 @@ export function AnimSlimee(app: PIXI.Application, color: string) {
     }
 }
 
-
 export function SingleSlimee(app: PIXI.Application, color: string) {
     const Textures = [];
     let i;
@@ -126,26 +126,32 @@ export function SingleSlimee(app: PIXI.Application, color: string) {
     }
 }
 
-// function CreateSlime(slm:ISlimeProps, pos:Vec2) {
-    
+export function AnimSunshine(app: PIXI.Application, data: ISunlightProps) {
+    const Textures = [];
+    let i;
+    for (i = 0; i <= 4; i++) {
+        const stexture = PIXI.Texture.from(`Props_SunshineFrame_${i}.png`);
+        Textures.push(stexture);
+    }
+    let j;
+    for (j = 0; j < data.value; j++) {
+        const sunshine = new PIXI.AnimatedSprite(Textures);
+        sunshine.anchor.set(0.5);
+        sunshine.x = data.pos.x
+        sunshine.y = data.pos.y;
+        sunshine.zIndex = 6; // 渲染图层
+        sunshine.gotoAndPlay(Math.random() * 27);
+        sunshine.animationSpeed = 0.1;
+        sunshine.scale.set(0.8, 0.8);
+        app.stage.addChild(sunshine);
+    }
+}
 
-// }
-
-
-
-
-
-export function AnimBuilding(
-    // app: PIXI.Application, type: BuildingType, pos: Vec2) {
-    app: PIXI.Application, type: BuildingType) {
-    // app.loader
-    //     .add('spritesheet2', '../../assets/FuncBds/' + type + '/spritesheet.json')
-    //     .load(onAssetsLoaded)
-    // function onAssetsLoaded() {
+export function GeneBuilding(app: PIXI.Application, data: IBuildingProps) {
     const Textures = [];
     let i;
     for (i = 0; i <= 8; i++) {
-        const covtexture = PIXI.Texture.from(type + `_cover_${i}.png`);
+        const covtexture = PIXI.Texture.from(data.type + `_cover_${i}.png`);
         Textures.push(covtexture);
     }
 
@@ -153,48 +159,19 @@ export function AnimBuilding(
     cover.anchor.set(0.5);
     cover.buttonMode = true;
     cover.interactive = true;
-    cover.x = 0.5 * app.screen.width;
-    cover.y = 0.5 * app.screen.height;
+    cover.x = data.pos.x;
+    cover.y = data.pos.y;
     cover.zIndex = 3; // 渲染图层
     cover.gotoAndPlay(Math.random() * 27);
     cover.animationSpeed = 0.1;
 
-    const groundtexture = PIXI.Texture.from(type + `_ground.png`);
+    const groundtexture = PIXI.Texture.from(data.type + `_ground.png`);
     const ground = new PIXI.Sprite(groundtexture);
     ground.anchor.set(0.5);
-    // ground.x = pos.x;
-    // ground.y = pos.y;
-    ground.x = 0.5 * app.screen.width; // 测试用
-    ground.y = 0.5 * app.screen.height; // 测试用
+    ground.x = data.pos.x;
+    ground.y = data.pos.y;
     ground.zIndex = 0; // 渲染图层
 
     app.stage.addChild(ground);
     app.stage.addChild(cover);
 }
-
-// export function AnimSunshine(app: PIXI.Application, pos: Vec2) {
-export function AnimSunshine(app: PIXI.Application) {
-    // app.loader
-    //     .add('spritesheet3', '../../assets/Props/Sunshine/spritesheet.json')
-    // .load(onAssetsLoaded)
-    // function onAssetsLoaded() {
-    const Textures = [];
-    let i;
-    for (i = 0; i <= 4; i++) {
-        const stexture = PIXI.Texture.from(`Props_SunshineFrame_${i}.png`);
-        Textures.push(stexture);
-    }
-    const sunshine = new PIXI.AnimatedSprite(Textures);
-    sunshine.anchor.set(0.5);
-    // sunshine.x = pos.x;
-    // sunshine.y = pos.y;
-    sunshine.x = 0.5 * app.screen.width; // 测试用
-    sunshine.y = 0.5 * app.screen.height; // 测试用
-    sunshine.zIndex = 6; // 渲染图层
-    sunshine.gotoAndPlay(Math.random() * 27);
-    sunshine.animationSpeed = 0.1;
-    sunshine.scale.set(0.8, 0.8);
-    app.stage.addChild(sunshine);
-    // }
-}
-
